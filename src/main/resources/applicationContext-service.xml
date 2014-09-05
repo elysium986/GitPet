@@ -3,4 +3,16 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="operatorService" class="service.impl.OperatorServiceImpl">
+        <property name="operatorDao" ref="operatorDao"/>
+    </bean>
+
+    <bean id="productService" class="service.impl.ProductServiceImpl">
+        <property name="productDao" ref="productDao"/>
+    </bean>
+
+    <bean id="countryService" class="service.impl.CountryServiceImpl">
+        <property name="countryDao" ref="countryDao"/>
+    </bean>
+
 </beans>

@@ -3,4 +3,20 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="operatorDao" class="dao.impl.OperatorDaoImpl">
+        <property name="hibernateTemplate" ref="hibernateTemplate"/>
+    </bean>
+
+    <bean id="countryDao" class="dao.impl.CountryDaoImpl">
+        <property name="hibernateTemplate" ref="hibernateTemplate"/>
+    </bean>
+
+    <bean id="productDao" class="dao.impl.ProductDaoImpl">
+        <property name="hibernateTemplate" ref="hibernateTemplate"/>
+    </bean>
+
 </beans>
