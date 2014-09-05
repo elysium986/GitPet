@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
+        <property name="locateExistingServerIfPossible" value="true"/>
+    </bean>
+
+    <bean id="datasourcesExporter" class="org.springframework.jmx.export.MBeanExporter">
+        <property name="assembler">
+            <bean class="org.springframework.jmx.export.assembler.MethodNameBasedMBeanInfoAssembler">
+                <property name="managedMethods">
+                    <list>
+                        <value>getNumActive</value>
+                        <value>getMaxActive</value>
+                        <value>getNumIdle</value>
+                        <value>getMaxIdle</value>
+                        <value>getMaxWait</value>
+                        <value>getInitialSize</value>
+                        <value>showTracesOlderThan</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+        <property name="beans">
+            <map>
+                <entry key="connection" value-ref="dataSource"/>
+            </map>
+        </property>
+        <property name="server" ref="mbeanServer"/>
+    </bean>
+
+    <bean id="annotationExporter" class="org.springframework.jmx.export.MBeanExporter">
+        <property name="assembler">
+            <bean class="org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler">
+                <property name="attributeSource" ref="jmxAttributeSource"/>
+            </bean>
+        </property>
+        <property name="namingStrategy">
+            <bean class="org.springframework.jmx.export.naming.MetadataNamingStrategy">
+                <property name="attributeSource" ref="jmxAttributeSource"/>
+            </bean>
+        </property>
+        <property name="autodetect" value="true"/>
+        <property name="server" ref="mbeanServer"/>
+    </bean>
+
+    <bean id="jmxAttributeSource" class="org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource"/>
+
+    <bean id="launchTasksJMXBean" class="util.JmxUtil"/>
+</beans>
