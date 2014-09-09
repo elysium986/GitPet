@@ -4,11 +4,18 @@ import dao.CountryDao;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by Alexander Khodakovskyi on 05/09/14.
  */
 
 @Repository("countryDao")
 public class CountryDaoImpl extends HibernateDaoSupport implements CountryDao {
+
+    @Override
+    public List findAll() {
+        return getHibernateTemplate().find("from Country");
+    }
 
 }

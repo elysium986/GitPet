@@ -6,6 +6,7 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Alexander Khodakovskyi on 05/09/14.
@@ -26,7 +27,12 @@ public class ProductDaoImpl extends HibernateDaoSupport implements ProductDao {
     }
 
     @Override
-    public Product find(Product product) {
-        return (Product)getHibernateTemplate().get("Product", product.getId());
+    public Product find(String name) {
+        return (Product)getHibernateTemplate().find("from Product where productName = ?", name).get(0);
+    }
+
+    @Override
+    public List findAll() {
+        return getHibernateTemplate().find("from Product");
     }
 }

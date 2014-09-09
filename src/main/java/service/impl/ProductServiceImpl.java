@@ -4,7 +4,10 @@ import dao.ProductDao;
 import model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import service.ProductService;
+
+import java.util.List;
 
 /**
  * Created by Alexander Khodakovskyi on 05/09/14.
@@ -17,18 +20,26 @@ public class ProductServiceImpl implements ProductService {
     ProductDao productDao;
 
     @Override
+    @Transactional
     public void save(Product product) {
         productDao.save(product);
     }
 
     @Override
+    @Transactional
     public void delete(Product product) {
         productDao.delete(product);
     }
 
     @Override
-    public Product find(Product product) {
-        return productDao.find(product);
+    @Transactional
+    public Product find(String name) {
+        return productDao.find(name);
+    }
+
+    @Override
+    public List findAll() {
+        return productDao.findAll();
     }
 
     public ProductDao getProductDao() {

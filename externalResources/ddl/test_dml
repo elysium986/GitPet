@@ -1,0 +1,2 @@
+insert into COUNTRY values (SEQ_COUNTRY.nextval, 'Ukraine', 'UKR', systimestamp, null);
+insert into COUNTRY values(SEQ_COUNTRY.nextval, 'Japan', 'JPN', systimestamp , null);

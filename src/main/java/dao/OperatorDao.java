@@ -15,7 +15,7 @@ public interface OperatorDao {
 
     void update(Operator operator);
 
-    Operator find(Operator operator);
+    Operator find(String name);
 
     List findAll();
 }

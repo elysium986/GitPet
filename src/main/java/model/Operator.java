@@ -13,9 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Alexander Khodakovskyi on 21/07/14.
@@ -29,9 +27,9 @@ public class Operator {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_OPERATOR")
     private Long id;
-    @Column(name = "OPERATOR_NAME")
+    @Column(name = "OPERATOR_NAME", unique = true, nullable = false)
     private String operatorName;
-    @Column(name = "OPERATOR_CODE")
+    @Column(name = "OPERATOR_CODE", unique = true, nullable = false)
     private String operatorCode;
     @ManyToOne
     @JoinColumn(name = "FK_COUNTRY")
@@ -46,7 +44,7 @@ public class Operator {
             name = "OPERATOR_PRODUCT",
             joinColumns = @JoinColumn(name = "FK_OPERATOR"),
             inverseJoinColumns = @JoinColumn(name = "FK_PRODUCT"))
-    private List<Product> products = new ArrayList<Product>();
+    private Set<Product> products = new HashSet<Product>();
 
     public Long getId() {
         return id;
@@ -96,11 +94,11 @@ public class Operator {
         this.endDate = endDate;
     }
 
-    public List<Product> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(Set<Product> products) {
         this.products = products;
     }
 }
