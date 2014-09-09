@@ -27,9 +27,9 @@ public class Operator {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_OPERATOR")
     private Long id;
-    @Column(name = "OPERATOR_NAME")
+    @Column(name = "OPERATOR_NAME", unique = true, nullable = false)
     private String operatorName;
-    @Column(name = "OPERATOR_CODE")
+    @Column(name = "OPERATOR_CODE", unique = true, nullable = false)
     private String operatorCode;
     @ManyToOne
     @JoinColumn(name = "FK_COUNTRY")

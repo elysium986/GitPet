@@ -28,9 +28,9 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PRODUCT")
     private Long id;
-    @Column(name = "PRODUCT_NAME")
+    @Column(name = "PRODUCT_NAME", unique = true, nullable = false)
     private String productName;
-    @Column(name = "PRODUCT_CODE")
+    @Column(name = "PRODUCT_CODE", unique = true, nullable = false)
     private String productCode;
     @Column(name = "START_DATE")
     private Date startDate;
@@ -38,11 +38,11 @@ public class Product {
     private Date endDate;
     @Column(name = "DESCRIPTION")
     private String description;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy ="products")
+    /*@JoinTable(
             name = "OPERATOR_PRODUCT",
             joinColumns = @JoinColumn(name = "FK_PRODUCT"),
-            inverseJoinColumns = @JoinColumn(name = "FK_OPERATOR"))
+            inverseJoinColumns = @JoinColumn(name = "FK_OPERATOR")) */
     private List<Operator> operators = new ArrayList<Operator>();
 
     public Long getId() {

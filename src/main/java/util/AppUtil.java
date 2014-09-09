@@ -28,18 +28,19 @@ public class AppUtil {
         ProductService productService = (ProductService) context.getBean("productService");
         OperatorService operatorService = (OperatorService) context.getBean("operatorService");
 
-        Product product = new Product();
-        product.setProductCode("VOICE");
-        product.setProductName("Voice");
-        product.setStartDate(new Date());
-
+        Product p = new Product();
+        p.setStartDate(new Date());
+        p.setProductName("GRX");
+        p.setProductCode("GRX");
+        List<Product> product = productService.findAll();
+        product.add(p);
         Set<Product> products = new HashSet<Product>();
-        products.add(product);
+        products.addAll(product);
 
         Operator operator = operatorService.find("Kyivstar");
+        operator.setProducts(products);
 
-        productService.save(product);
-        operatorService.save(operator);
+        operatorService.update(operator);
 
         /*Transaction tx = null;
         try {
@@ -53,7 +54,7 @@ public class AppUtil {
                 tx = session.beginTransaction();
 
                 session.saveOrUpdate(product);
-                session.saveOrUpdate(product1);
+                session.saveOrUpdate(product);
                 session.saveOrUpdate(operator);
                 tx.commit();
 

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.ProductService;
 
+import java.util.List;
+
 /**
  * Created by Alexander Khodakovskyi on 05/09/14.
  */
@@ -31,8 +33,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public Product find(Product product) {
-        return productDao.find(product);
+    public Product find(String name) {
+        return productDao.find(name);
+    }
+
+    @Override
+    public List findAll() {
+        return productDao.findAll();
     }
 
     public ProductDao getProductDao() {

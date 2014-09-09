@@ -26,9 +26,9 @@ public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_COUNTRY")
     private Long id;
-    @Column(name = "COUNTRY_NAME")
+    @Column(name = "COUNTRY_NAME", unique = true, nullable = false)
     private String countryName;
-    @Column(name = "COUNTRY_CODE")
+    @Column(name = "COUNTRY_CODE", unique = true, nullable = false)
     private String countryCode;
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Operator> operators;
