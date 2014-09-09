@@ -4,6 +4,7 @@ import dao.ProductDao;
 import model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import service.ProductService;
 
 /**
@@ -17,16 +18,19 @@ public class ProductServiceImpl implements ProductService {
     ProductDao productDao;
 
     @Override
+    @Transactional
     public void save(Product product) {
         productDao.save(product);
     }
 
     @Override
+    @Transactional
     public void delete(Product product) {
         productDao.delete(product);
     }
 
     @Override
+    @Transactional
     public Product find(Product product) {
         return productDao.find(product);
     }

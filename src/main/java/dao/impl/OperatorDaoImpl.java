@@ -31,8 +31,8 @@ public class OperatorDaoImpl extends HibernateDaoSupport implements OperatorDao 
     }
 
     @Override
-    public Operator find(Operator operator) {
-        return (Operator)getHibernateTemplate().get("Operator", operator.getId());
+    public Operator find(String name) {
+        return (Operator) getHibernateTemplate().find("from Operator where operatorName = ?", name).get(0);
     }
 
     @Override
