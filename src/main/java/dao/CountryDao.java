@@ -1,5 +1,7 @@
 package dao;
 
+import model.Country;
+
 import java.util.List;
 
 /**
@@ -8,4 +10,6 @@ import java.util.List;
 public interface CountryDao {
 
     List findAll();
+
+    void save(Country country);
 }

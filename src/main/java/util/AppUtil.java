@@ -3,6 +3,9 @@ package util;
 import model.Country;
 import model.Operator;
 import model.Product;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import service.CountryService;
@@ -20,27 +23,34 @@ import java.util.Set;
 public class AppUtil {
 
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-        CountryService countryService = (CountryService) context.getBean("countryService");
+        CountryService countryService = SpringUtil.getCountryService();
+        ProductService productService = SpringUtil.getProductService();
+        OperatorService operatorService = SpringUtil.getOperatorService();
+
         List<Country> countries = countryService.findAll();
 
-        ProductService productService = (ProductService) context.getBean("productService");
-        OperatorService operatorService = (OperatorService) context.getBean("operatorService");
-
-        Product p = new Product();
-        p.setStartDate(new Date());
-        p.setProductName("GRX");
-        p.setProductCode("GRX");
+        Product newProduct = new Product();
+        newProduct.setStartDate(new Date());
+        newProduct.setProductName("GRX");
+        newProduct.setProductCode("GRX");
         List<Product> product = productService.findAll();
-        product.add(p);
+//        product.add(newProduct);
         Set<Product> products = new HashSet<Product>();
         products.addAll(product);
 
-        Operator operator = operatorService.find("Kyivstar");
-        operator.setProducts(products);
+        Operator newOperator = new Operator();
+        newOperator.setOperatorName("MTS");
+        newOperator.setOperatorCode("MTS");
+        newOperator.setStartDate(new Date());
+        newOperator.setCountry(countries.get(0));
+        newOperator.setProducts(products);
 
-        operatorService.update(operator);
+        Operator operator = operatorService.find("Kyivstar");
+//        operator.setProducts(products);
+//        operatorService.update(operator);
+
+        operatorService.save(newOperator);
 
         /*Transaction tx = null;
         try {
@@ -67,5 +77,7 @@ public class AppUtil {
             }
             e.printStackTrace();
         }*/
+
+        DetachedCriteria criteria = DetachedCriteria.forClass(Country.class).add(Restrictions.disjunction()).add(Property.forName("countryCode").in(new String []{"UKR", "JAP"}));
     }
 }
