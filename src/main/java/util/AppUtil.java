@@ -6,8 +6,6 @@ import model.Product;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import service.CountryService;
 import service.OperatorService;
 import service.ProductService;
@@ -52,31 +50,6 @@ public class AppUtil {
 
         operatorService.save(newOperator);
 
-        /*Transaction tx = null;
-        try {
-            Configuration configuration = new Configuration();
-
-            ServiceRegistryBuilder builder = new ServiceRegistryBuilder().applySettings(configuration.getProperties());
-            SessionFactory factory = configuration.buildSessionFactory(builder.buildServiceRegistry());
-            Session session = factory.openSession();
-
-            try {
-                tx = session.beginTransaction();
-
-                session.saveOrUpdate(product);
-                session.saveOrUpdate(product);
-                session.saveOrUpdate(operator);
-                tx.commit();
-
-            } finally {
-                session.close();
-            }
-        } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            e.printStackTrace();
-        }*/
 
         DetachedCriteria criteria = DetachedCriteria.forClass(Country.class).add(Restrictions.disjunction()).add(Property.forName("countryCode").in(new String []{"UKR", "JAP"}));
     }
