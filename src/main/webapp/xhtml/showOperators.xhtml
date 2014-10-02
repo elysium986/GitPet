@@ -10,13 +10,34 @@
 <h:head>Operators</h:head>
 
 <h:body>
-    <h:dataTable value="#{operator.operatorsList()}" var="list"/>
-    <h:column>
-        <f:facet name="header">
-            Operator Name
-        </f:facet>
-        #{list.operator.name()}
-    </h:column>
+    <h:form id="operatorForm">
+        <h:dataTable id="operators" value="#{operator.getOperatorsList()}" var="list">
+            <h:column>
+                <f:facet name="header">
+                    Country
+                </f:facet>
+                #{list.country.countryName}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Operator Name
+                </f:facet>
+                #{list.operatorName}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Operator Code
+                </f:facet>
+                #{list.operatorCode}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Start Date
+                </f:facet>
+                #{list.startDate}
+            </h:column>
+        </h:dataTable>
+    </h:form>
 </h:body>
 
 </html>

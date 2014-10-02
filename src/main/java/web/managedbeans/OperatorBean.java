@@ -2,24 +2,24 @@ package web.managedbeans;
 
 import model.Country;
 import model.Operator;
-import org.ajax4jsf.model.KeepAlive;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import service.OperatorService;
 
-import javax.faces.bean.ManagedBean;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Alexander Khodakovskyi on 26/09/14.
  */
-@ManagedBean
-@Component("operatorBean")
-@KeepAlive
-@Scope("session")
-public class OperatorBean {
 
+@Component("operatorBean")
+@Scope("session")
+public class OperatorBean implements Serializable {
+
+    @Autowired
     private OperatorService operatorService;
 
     private String name;

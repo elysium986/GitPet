@@ -7,5 +7,6 @@
     <import resource="applicationContext-resources.xml"/>
     <import resource="applicationContext-service.xml"/>
     <import resource="applicationContext-jmx.xml"/>
+    <import resource="applicationContext-web.xml"/>
 
 </beans>
