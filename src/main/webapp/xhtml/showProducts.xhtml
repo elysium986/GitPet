@@ -14,31 +14,31 @@
     </style>
 
     <h:head>
-        <title>Countries Overview</title>
+        <title>Products Overview</title>
     </h:head>
     <h:body>
-        <h:form id="countryForm">
-            <rich:dataTable id="countries" value="#{country.getCountries()}" var="list"
+        <h:form id="productForm">
+            <rich:dataTable id="products" value="#{product.getProducts()}" var="list"
                             onRowMouseOver="this.style.backgroundColor='#F1F1F1'" styleClass="center">
                 <f:facet name="header">
-                    <h:outputText value="Countries"/>
+                    <h:outputText value="Products"/>
                 </f:facet>
-                <rich:column breakBefore="true" sortBy="#{list.countryName}"
-                             filterBy="#{list.countryName}">
+                <rich:column breakBefore="true" sortBy="#{list.productName}"
+                             filterBy="#{list.productName}">
                     <f:facet name="header">
-                        <h:outputText value="Country"/>
+                        <h:outputText value="Product Name"/>
                     </f:facet>
-                    <h:outputText value="#{list.countryName}"/>
+                    <h:outputText value="#{list.productName}"/>
                 </rich:column>
-                <rich:column breakBefore="true" sortBy="#{list.countryCode}"
-                             filterBy="#{list.countryCode}">
+                <rich:column breakBefore="true" sortBy="#{list.productCode}"
+                             filterBy="#{list.productCode}">
                     <f:facet name="header">
-                        <h:outputText value="ISO"/>
+                        <h:outputText value="Product Code"/>
                     </f:facet>
-                    <h:outputText value="#{list.countryCode}"/>
+                    <h:outputText value="#{list.productCode}"/>
                 </rich:column>
             </rich:dataTable>
-            <rich:dataScroller id="paginator" for="countries" align="left" renderIfSinglePage="false"/>
+            <rich:dataScroller id="paginator" for="products" align="left" renderIfSinglePage="false"/>
         </h:form>
     </h:body>
 

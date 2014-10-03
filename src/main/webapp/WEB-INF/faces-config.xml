@@ -26,5 +26,14 @@
             <value>#{countryService}</value>
         </managed-property>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>product</managed-bean-name>
+        <managed-bean-class>web.managedbeans.ProductBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>productService</property-name>
+            <value>#{productService}</value>
+        </managed-property>
+    </managed-bean>
 
 </faces-config>
