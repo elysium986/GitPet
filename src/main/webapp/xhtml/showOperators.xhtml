@@ -1,43 +1,59 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:rich="http://richfaces.org/rich"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:a4j="http://richfaces.org/a4j">
 
-        >
+    <style>
+        .center{
+            text-align:center;
+        }
+    </style>
 
-<h:head>Operators</h:head>
+    <head>
+        <title>Web App</title>
+    </head>
 
-<h:body>
     <h:form id="operatorForm">
-        <h:dataTable id="operators" value="#{operator.getOperatorsList()}" var="list">
-            <h:column>
+        <rich:dataTable id="operators" value="#{operator.getOperatorsList()}" var="list"
+                        onRowMouseOver="this.style.backgroundColor='#F1F1F1'" columnClasses="center">
+            <f:facet name="header">
+                <h:outputText value="Operators"/>
+            </f:facet>
+            <rich:column breakBefore="true" sortBy="#{list.country.countryName}" filterBy="#{list.country.countryName}">
                 <f:facet name="header">
-                    Country
+                    <h:outputText value="Country"/>
                 </f:facet>
-                #{list.country.countryName}
-            </h:column>
-            <h:column>
+                <h:outputText value="#{list.country.countryName}"/>
+            </rich:column>
+            <rich:column breakBefore="true" sortBy="#{list.country.countryCode}" filterBy="#{list.country.countryCode}">
                 <f:facet name="header">
-                    Operator Name
+                    <h:outputText value="ISO"/>
                 </f:facet>
-                #{list.operatorName}
-            </h:column>
-            <h:column>
+                <h:outputText value="#{list.country.countryCode}"/>
+            </rich:column>
+            <rich:column breakBefore="true" sortBy="#{list.operatorName}" filterBy="#{list.operatorName}">
                 <f:facet name="header">
-                    Operator Code
+                    <h:outputText value="Operator Name"/>
                 </f:facet>
-                #{list.operatorCode}
-            </h:column>
-            <h:column>
+                <h:outputText value="#{list.operatorName}"/>
+            </rich:column>
+            <rich:column breakBefore="true" sortBy="#{list.operatorCode}" filterBy="#{list.operatorCode}">
                 <f:facet name="header">
-                    Start Date
+                    <h:outputText value="Operator Code"/>
                 </f:facet>
-                #{list.startDate}
-            </h:column>
-        </h:dataTable>
+                <h:outputText value="#{list.operatorCode}"/>
+            </rich:column>
+            <rich:column breakBefore="true" sortBy="#{list.startDate}" filterBy="#{list.startDate}">
+                <f:facet name="header">
+                    <h:outputText value="Start Date"/>
+                </f:facet>
+                <h:outputText value="#{list.startDate}" converter="javax.faces.DateTime"/>
+            </rich:column>
+        </rich:dataTable>
+        <rich:dataScroller id="paginator" for="operators" align="left"/>
     </h:form>
-</h:body>
 
-</html>
+</ui:composition>

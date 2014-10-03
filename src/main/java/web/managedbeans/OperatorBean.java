@@ -31,6 +31,15 @@ public class OperatorBean implements Serializable {
         return operatorService.findAll();
     }
 
+    public void addOperator() {
+        Operator operator = new Operator();
+
+        operator.setCountry(country);
+        operator.setOperatorName(name);
+        operator.setOperatorCode(code);
+
+    }
+
     public OperatorService getOperatorService() {
         return operatorService;
     }

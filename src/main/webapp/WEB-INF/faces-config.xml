@@ -17,5 +17,14 @@
             <value>#{operatorService}</value>
         </managed-property>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>country</managed-bean-name>
+        <managed-bean-class>web.managedbeans.CountryBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>countryService</property-name>
+            <value>#{countryService}</value>
+        </managed-property>
+    </managed-bean>
 
 </faces-config>
