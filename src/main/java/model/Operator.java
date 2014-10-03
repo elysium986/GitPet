@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -22,7 +23,7 @@ import java.util.*;
 @Entity
 @Table(name = "OPERATOR")
 @SequenceGenerator(name = "SEQ_OPERATOR", sequenceName = "SEQ_OPERATOR")
-public class Operator {
+public class Operator implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_OPERATOR")

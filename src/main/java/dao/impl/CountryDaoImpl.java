@@ -1,6 +1,7 @@
 package dao.impl;
 
 import dao.CountryDao;
+import model.Country;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +19,8 @@ public class CountryDaoImpl extends HibernateDaoSupport implements CountryDao {
         return getHibernateTemplate().find("from Country");
     }
 
+    @Override
+    public void save(Country country) {
+        getHibernateTemplate().save(country);
+    }
 }

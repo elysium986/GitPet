@@ -1,0 +1,63 @@
+<h:panelGrid
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:rich="http://richfaces.org/rich"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:a4j="http://richfaces.org/a4j">
+
+    <style>
+        .center {
+            text-align: center;
+            color: orangered;
+        }
+    </style>
+
+    <h:head>
+        <title>Operators Overview</title>
+    </h:head>
+    <h:body>
+        <h:form id="operatorForm">
+            <rich:dataTable id="operators" value="#{operator.getOperatorsList()}" var="list"
+                            onRowMouseOver="this.style.backgroundColor='#F1F1F1'" styleClass="center">
+                <f:facet name="header">
+                    <h:outputText value="Operators"/>
+                </f:facet>
+                <rich:column breakBefore="true" sortBy="#{list.country.countryName}"
+                             filterBy="#{list.country.countryName}">
+                    <f:facet name="header">
+                        <h:outputText value="Country"/>
+                    </f:facet>
+                    <h:outputText value="#{list.country.countryName}"/>
+                </rich:column>
+                <rich:column breakBefore="true" sortBy="#{list.country.countryCode}"
+                             filterBy="#{list.country.countryCode}">
+                    <f:facet name="header">
+                        <h:outputText value="ISO"/>
+                    </f:facet>
+                    <h:outputText value="#{list.country.countryCode}"/>
+                </rich:column>
+                <rich:column breakBefore="true" sortBy="#{list.operatorName}" filterBy="#{list.operatorName}">
+                    <f:facet name="header">
+                        <h:outputText value="Operator Name"/>
+                    </f:facet>
+                    <h:outputText value="#{list.operatorName}"/>
+                </rich:column>
+                <rich:column breakBefore="true" sortBy="#{list.operatorCode}" filterBy="#{list.operatorCode}">
+                    <f:facet name="header">
+                        <h:outputText value="Operator Code"/>
+                    </f:facet>
+                    <h:outputText value="#{list.operatorCode}"/>
+                </rich:column>
+                <rich:column breakBefore="true" sortBy="#{list.startDate}" filterBy="#{list.startDate}">
+                    <f:facet name="header">
+                        <h:outputText value="Start Date"/>
+                    </f:facet>
+                    <h:outputText value="#{list.startDate}" converter="javax.faces.DateTime"/>
+                </rich:column>
+            </rich:dataTable>
+            <rich:dataScroller id="paginator" for="operators" align="left" renderIfSinglePage="false"/>
+        </h:form>
+    </h:body>
+
+</h:panelGrid>

@@ -1,0 +1,52 @@
+<h:panelGrid
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:rich="http://richfaces.org/rich"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:a4j="http://richfaces.org/a4j">
+
+    <style>
+        .center {
+            text-align: center;
+            color: orangered;
+        }
+    </style>
+
+    <h:head>
+        <title>Products Overview</title>
+    </h:head>
+    <h:body>
+        <h:form id="productForm">
+            <rich:dataTable id="products" value="#{product.getProducts()}" var="list"
+                            onRowMouseOver="this.style.backgroundColor='#F1F1F1'" styleClass="center">
+                <f:facet name="header">
+                    <h:outputText value="Products"/>
+                </f:facet>
+                <rich:column breakBefore="true" sortBy="#{list.productName}"
+                             filterBy="#{list.productName}">
+                    <f:facet name="header">
+                        <h:outputText value="Product Name"/>
+                    </f:facet>
+                    <h:outputText value="#{list.productName}"/>
+                </rich:column>
+                <rich:column breakBefore="true" sortBy="#{list.productCode}"
+                             filterBy="#{list.productCode}">
+                    <f:facet name="header">
+                        <h:outputText value="Product Code"/>
+                    </f:facet>
+                    <h:outputText value="#{list.productCode}"/>
+                </rich:column>
+                <rich:column breakBefore="true" sortBy="#{list.startDate}"
+                             filterBy="#{list.startDate}">
+                    <f:facet name="header">
+                        <h:outputText value="Start Date"/>
+                    </f:facet>
+                    <h:outputText value="#{list.startDate}" converter="javax.faces.DateTime"/>
+                </rich:column>
+            </rich:dataTable>
+            <rich:dataScroller id="paginator" for="products" align="left" renderIfSinglePage="false"/>
+        </h:form>
+    </h:body>
+
+</h:panelGrid>

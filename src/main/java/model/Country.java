@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -21,7 +22,7 @@ import java.util.Set;
 @Entity
 @Table(name = "COUNTRY")
 @SequenceGenerator(name = "SEQ_COUNTRY", sequenceName = "SEQ_COUNTRY")
-public class Country {
+public class Country implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_COUNTRY")

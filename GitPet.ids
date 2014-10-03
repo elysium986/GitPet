@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source source="LOCAL" name="H2-Local" uuid="053d3b44-8d0b-4115-908b-46cc3cd032a3">
+    <database-info product="H2" version="1.3.175 (2014-01-18)" jdbc-version="4.0" driver-name="H2 JDBC Driver" driver-version="1.3.175 (2014-01-18)">
+      <identifier-quote-string>&quot;</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact"/>
+    <schema name="PUBLIC" catalog="SAMPLE"/>
+    <table name="COUNTRY" schema="PUBLIC" catalog="SAMPLE" type="TABLE">
+      <column name="ID" sqlType="INTEGER" length="10" precision="0" nullable="false" jdbcType="4" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TRVFfQ09VTlRSWSk="/>
+      <column name="COUNTRY_NAME" sqlType="VARCHAR" length="2147483647" precision="0" nullable="false" jdbcType="12"/>
+      <column name="COUNTRY_CODE" sqlType="VARCHAR" length="2147483647" precision="0" nullable="false" jdbcType="12"/>
+      <column name="START_DATE" sqlType="DATE" length="8" precision="0" nullable="false" jdbcType="91"/>
+      <column name="END_DATE" sqlType="DATE" length="8" precision="0" nullable="true" jdbcType="91"/>
+      <primary-key name="CONSTRAINT_6" columns="ID"/>
+      <index name="UNIQUE_COUNTRY_CODE_INDEX_6" unique="true" columns="COUNTRY_CODE"/>
+      <index name="UNIQUE_COUNTRY_NAME_INDEX_6" unique="true" columns="COUNTRY_NAME"/>
+    </table>
+    <table name="OPERATOR" schema="PUBLIC" catalog="SAMPLE" type="TABLE">
+      <column name="ID" sqlType="INTEGER" length="10" precision="0" nullable="false" jdbcType="4" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TRVFfT1BFUkFUT1Ip"/>
+      <column name="OPERATOR_NAME" sqlType="VARCHAR" length="2147483647" precision="0" nullable="false" jdbcType="12"/>
+      <column name="OPERATOR_CODE" sqlType="VARCHAR" length="2147483647" precision="0" nullable="false" jdbcType="12"/>
+      <column name="FK_COUNTRY" sqlType="INTEGER" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="START_DATE" sqlType="DATE" length="8" precision="0" nullable="false" jdbcType="91"/>
+      <column name="END_DATE" sqlType="DATE" length="8" precision="0" nullable="true" jdbcType="91"/>
+      <primary-key name="CONSTRAINT_10" columns="ID"/>
+      <exported-key name="CONSTRAINT_4" table="OPERATOR_PRODUCT" schema="PUBLIC" catalog="SAMPLE" columns="FK_OPERATOR"/>
+      <index name="UNIQUE_OPERATOR_CODE_INDEX_1" unique="true" columns="OPERATOR_CODE"/>
+      <index name="UNIQUE_OPERATOR_NAME_INDEX_1" unique="true" columns="OPERATOR_NAME"/>
+    </table>
+    <table name="OPERATOR_PRODUCT" schema="PUBLIC" catalog="SAMPLE" type="TABLE">
+      <column name="FK_OPERATOR" sqlType="INTEGER" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="FK_PRODUCT" sqlType="INTEGER" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <foreign-key name="CONSTRAINT_4" columns="FK_OPERATOR" ref-table="OPERATOR" ref-schema="PUBLIC" ref-catalog="SAMPLE" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="CONSTRAINT_4B" columns="FK_PRODUCT" ref-table="PRODUCT" ref-schema="PUBLIC" ref-catalog="SAMPLE" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
+    </table>
+    <table name="PRODUCT" schema="PUBLIC" catalog="SAMPLE" type="TABLE">
+      <column name="ID" sqlType="INTEGER" length="10" precision="0" nullable="false" jdbcType="4" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TRVFfUFJPRFVDVCk="/>
+      <column name="PRODUCT_NAME" sqlType="VARCHAR" length="2147483647" precision="0" nullable="false" jdbcType="12"/>
+      <column name="PRODUCT_CODE" sqlType="VARCHAR" length="2147483647" precision="0" nullable="false" jdbcType="12"/>
+      <column name="START_DATE" sqlType="DATE" length="8" precision="0" nullable="false" jdbcType="91"/>
+      <column name="END_DATE" sqlType="DATE" length="8" precision="0" nullable="true" jdbcType="91"/>
+      <column name="DESCRIPTION" sqlType="VARCHAR" length="2147483647" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="CONSTRAINT_1" columns="ID"/>
+      <exported-key name="CONSTRAINT_4B" table="OPERATOR_PRODUCT" schema="PUBLIC" catalog="SAMPLE" columns="FK_PRODUCT"/>
+      <index name="UNIQUE_PRODUCT_CODE_INDEX_1" unique="true" columns="PRODUCT_CODE"/>
+      <index name="UNIQUE_PRODUCT_NAME_INDEX_1" unique="true" columns="PRODUCT_NAME"/>
+    </table>
+  </data-source>
+</component>

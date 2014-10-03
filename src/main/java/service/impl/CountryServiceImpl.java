@@ -1,6 +1,7 @@
 package service.impl;
 
 import dao.CountryDao;
+import model.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,12 @@ public class CountryServiceImpl implements CountryService {
     @Transactional
     public List findAll() {
         return countryDao.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void save(Country country) {
+        countryDao.save(country);
     }
 
     public CountryDao getCountryDao() {
