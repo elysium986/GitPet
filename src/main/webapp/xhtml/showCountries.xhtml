@@ -1,0 +1,45 @@
+<h:panelGrid
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:rich="http://richfaces.org/rich"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:a4j="http://richfaces.org/a4j">
+
+    <style>
+        .center {
+            text-align: center;
+            color: orangered;
+        }
+    </style>
+
+    <h:head>
+        <title>Countries Overview</title>
+    </h:head>
+    <h:body>
+        <h:form id="ocountryForm">
+            <rich:dataTable id="countries" value="#{country.getCountries()}" var="list"
+                            onRowMouseOver="this.style.backgroundColor='#F1F1F1'" styleClass="center">
+                <f:facet name="header">
+                    <h:outputText value="Countries"/>
+                </f:facet>
+                <rich:column breakBefore="true" sortBy="#{list.countryName}"
+                             filterBy="#{list.countryName}">
+                    <f:facet name="header">
+                        <h:outputText value="Country"/>
+                    </f:facet>
+                    <h:outputText value="#{list.countryName}"/>
+                </rich:column>
+                <rich:column breakBefore="true" sortBy="#{list.countryCode}"
+                             filterBy="#{list.countryCode}">
+                    <f:facet name="header">
+                        <h:outputText value="ISO"/>
+                    </f:facet>
+                    <h:outputText value="#{list.countryCode}"/>
+                </rich:column>
+            </rich:dataTable>
+            <rich:dataScroller id="paginator" for="countries" align="left" renderIfSinglePage="false"/>
+        </h:form>
+    </h:body>
+
+</h:panelGrid>
