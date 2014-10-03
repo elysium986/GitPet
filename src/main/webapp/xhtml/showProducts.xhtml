@@ -37,6 +37,13 @@
                     </f:facet>
                     <h:outputText value="#{list.productCode}"/>
                 </rich:column>
+                <rich:column breakBefore="true" sortBy="#{list.startDate}"
+                             filterBy="#{list.startDate}">
+                    <f:facet name="header">
+                        <h:outputText value="Start Date"/>
+                    </f:facet>
+                    <h:outputText value="#{list.startDate}" converter="javax.faces.DateTime"/>
+                </rich:column>
             </rich:dataTable>
             <rich:dataScroller id="paginator" for="products" align="left" renderIfSinglePage="false"/>
         </h:form>

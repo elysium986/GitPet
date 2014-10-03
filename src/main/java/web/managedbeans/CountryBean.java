@@ -1,10 +1,13 @@
 package web.managedbeans;
 
 import model.Country;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import service.CountryService;
+import web.util.FacesUtil;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,6 +19,7 @@ import java.util.List;
 @Component("countryBean")
 @Scope("session")
 public class CountryBean implements Serializable {
+    private static final Logger log = LoggerFactory.getLogger(CountryBean.class);
 
     private String name;
     private String code;
@@ -37,7 +41,19 @@ public class CountryBean implements Serializable {
         country.setCountryCode(code);
         country.setStartDate(new Date());
 
-        countryService.save(country);
+        try {
+            countryService.save(country);
+            FacesUtil.info("Country : " + name + " was successfully added.");
+            log.info("Country : " + name + " was successfully added.");
+            clear();
+        } catch (Exception e) {
+            FacesUtil.error("Country : " + name + " already exists!");
+        }
+    }
+
+    public void clear() {
+        setName("");
+        setCode("");
     }
 
 

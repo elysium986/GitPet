@@ -1,10 +1,13 @@
 package web.managedbeans;
 
 import model.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import service.ProductService;
+import web.util.FacesUtil;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,6 +19,7 @@ import java.util.List;
 @Component("productBean")
 @Scope("session")
 public class ProductBean implements Serializable {
+    private static final Logger log = LoggerFactory.getLogger(ProductBean.class);
 
     @Autowired
     private ProductService productService;
@@ -36,7 +40,19 @@ public class ProductBean implements Serializable {
         product.setProductCode(code);
         product.setStartDate(new Date());
 
-        productService.save(product);
+        try {
+            productService.save(product);
+            FacesUtil.info("Product : " + name + " was successfully added.");
+            log.info("Product : " + name + " was successfully added.");
+            clear();
+        } catch (Exception e) {
+            FacesUtil.error("Product : " + name + " already exists!");
+        }
+    }
+
+    public void clear() {
+        setName("");
+        setCode("");
     }
 
     public ProductService getProductService() {

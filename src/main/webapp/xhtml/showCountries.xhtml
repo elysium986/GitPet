@@ -3,7 +3,6 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:rich="http://richfaces.org/rich"
-        xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:a4j="http://richfaces.org/a4j">
 
     <style>
@@ -40,6 +39,28 @@
             </rich:dataTable>
             <rich:dataScroller id="paginator" for="countries" align="left" renderIfSinglePage="false"/>
         </h:form>
+
+        <rich:panel style="width: 400px">
+            <f:facet name="header">
+                <h:outputText value="Add Operator"/>
+            </f:facet>
+            <h:form>
+                <rich:messages ajaxRendered="true"/>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Country Name:" />
+                    <h:inputText label="Country Name" id="countryName" required="true" value="#{country.name}">
+                        <f:validateLength minimum="3" maximum="20"/>
+                    </h:inputText>
+                    <h:outputText value="Country Code:" />
+                    <h:inputText label="Country Code" id="countryCode" required="true" value="#{country.code}">
+                        <f:validateLength minimum="3" maximum="3"/>
+                    </h:inputText>
+                    <f:facet name="footer">
+                        <a4j:commandButton value="Save" actionListener="#{country.addCountry()}"/>
+                    </f:facet>
+                </h:panelGrid>
+            </h:form>
+        </rich:panel>
     </h:body>
 
 </h:panelGrid>
