@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import service.OperatorService;
+import web.util.FacesUtil;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -47,6 +48,20 @@ public class OperatorBean implements Serializable {
         operator.setOperatorName(name);
         operator.setOperatorCode(code);
 
+        try {
+            operatorService.save(operator);
+            FacesUtil.info("Operator : " + name  + " was successfully added.");
+            log.info("Operator : " + name  + " was successfully added.");
+            clear();
+        } catch (Exception e) {
+            FacesUtil.error("Operator : " + name  + " already exists!");
+        }
+
+    }
+
+    public void clear() {
+        setName(null);
+        setCode(null);
     }
 
     public void sortByCountry() {
