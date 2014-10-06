@@ -68,7 +68,7 @@ public class CountryBean implements Serializable {
     }
 
     public List<SelectItem> getCountryOptions() {
-        List<SelectItem> result = new ArrayList<>();
+        List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem("", ""));
         for (Country countryList : getCountries()) {
             result.add(new SelectItem(countryList.getCountryName()));
@@ -85,8 +85,8 @@ public class CountryBean implements Serializable {
     }
 
     public void clear() {
-        setName("");
-        setCode("");
+        setName(null);
+        setCode(null);
     }
 
     public String getCountryFilter() {

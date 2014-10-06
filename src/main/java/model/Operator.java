@@ -40,7 +40,7 @@ public class Operator implements Serializable {
     @Column(name = "END_DATE")
     private Date endDate;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "OPERATOR_PRODUCT",
             joinColumns = @JoinColumn(name = "FK_OPERATOR"),

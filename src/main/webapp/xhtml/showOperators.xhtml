@@ -5,7 +5,8 @@
         xmlns:rich="http://richfaces.org/rich"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:a4j="http://richfaces.org/a4j"
-        xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+        xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+        xmlns:of="http://omnifaces.org/functions">
 
     <h:outputStylesheet>
         .even-row {
@@ -72,6 +73,14 @@
                         <h:outputText value="Operator Code"/>
                     </f:facet>
                     <h:outputText value="#{list.operatorCode}"/>
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">
+                        <h:outputText value="Available Products "/>
+                    </f:facet>
+                    <ui:repeat value="#{of:setToList(list.products)}" var="p">
+                        <h:outputText value="#{p.productName}"/><br/>
+                    </ui:repeat>
                 </rich:column>
                 <rich:column>
                     <f:facet name="header">

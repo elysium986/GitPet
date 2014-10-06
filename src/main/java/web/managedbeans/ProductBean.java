@@ -51,8 +51,8 @@ public class ProductBean implements Serializable {
     }
 
     public void clear() {
-        setName("");
-        setCode("");
+        setName(null);
+        setCode(null);
     }
 
     public ProductService getProductService() {
