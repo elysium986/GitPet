@@ -2,6 +2,8 @@ package web.managedbeans;
 
 import model.Country;
 import model.Operator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -18,9 +20,13 @@ import java.util.List;
 @Component("operatorBean")
 @Scope("session")
 public class OperatorBean implements Serializable {
+    private static final Logger log = LoggerFactory.getLogger(OperatorBean.class);
 
     @Autowired
     private OperatorService operatorService;
+
+    private String operatorFilter;
+    private String countryFilter;
 
     private String name;
     private String code;
@@ -38,6 +44,22 @@ public class OperatorBean implements Serializable {
         operator.setOperatorName(name);
         operator.setOperatorCode(code);
 
+    }
+
+    public String getCountryFilter() {
+        return countryFilter;
+    }
+
+    public void setCountryFilter(String countryFilter) {
+        this.countryFilter = countryFilter;
+    }
+
+    public String getOperatorFilter() {
+        return operatorFilter;
+    }
+
+    public void setOperatorFilter(String operatorFilter) {
+        this.operatorFilter = operatorFilter;
     }
 
     public OperatorService getOperatorService() {

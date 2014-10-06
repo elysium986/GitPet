@@ -4,14 +4,24 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:rich="http://richfaces.org/rich"
         xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:a4j="http://richfaces.org/a4j">
+        xmlns:a4j="http://richfaces.org/a4j"
+        xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-    <style>
-        .center {
-            text-align: center;
-            color: orangered;
+    <h:outputStylesheet>
+        .even-row {
+            background-color: #FCFFFE;
         }
-    </style>
+
+        .odd-row {
+            background-color: #ECF3FE;
+        }
+
+        .active-row {
+            background-color: #FFEBDA !important;
+            cursor: pointer;
+            text-align: center;
+        }
+    </h:outputStylesheet>
 
     <h:head>
         <title>Operators Overview</title>
@@ -19,37 +29,49 @@
     <h:body>
         <h:form id="operatorForm">
             <rich:dataTable id="operators" value="#{operator.getOperatorsList()}" var="list"
-                            onRowMouseOver="this.style.backgroundColor='#F1F1F1'" styleClass="center">
+                            rowClasses="odd-row, even-row"
+                            styleClass="soper">
                 <f:facet name="header">
                     <h:outputText value="Operators"/>
                 </f:facet>
-                <rich:column breakBefore="true" sortBy="#{list.country.countryName}"
-                             filterBy="#{list.country.countryName}">
+                <f:facet name="noData">
+                    Nothing found
+                </f:facet>
+                <rich:column filterValue="#{operator.countryFilter}" filterExpression="#{fn:containsIgnoreCase(list.country.countryName, operator.countryFilter)}">
                     <f:facet name="header">
-                        <h:outputText value="Country"/>
+                        <h:panelGroup>
+                            <h:outputText value="Country " />
+                            <h:inputText value="#{operator.countryFilter}">
+                                <a4j:ajax event="blur" render="operators" execute="@this" />
+                            </h:inputText>
+                        </h:panelGroup>
                     </f:facet>
                     <h:outputText value="#{list.country.countryName}"/>
                 </rich:column>
-                <rich:column breakBefore="true" sortBy="#{list.country.countryCode}"
-                             filterBy="#{list.country.countryCode}">
+                <rich:column>
                     <f:facet name="header">
                         <h:outputText value="ISO"/>
                     </f:facet>
                     <h:outputText value="#{list.country.countryCode}"/>
                 </rich:column>
-                <rich:column breakBefore="true" sortBy="#{list.operatorName}" filterBy="#{list.operatorName}">
+                <rich:column filterValue="#{operator.operatorFilter}" filterExpression="#{fn:containsIgnoreCase(list.operatorName, operator.operatorFilter)}">
                     <f:facet name="header">
-                        <h:outputText value="Operator Name"/>
+                        <h:panelGroup>
+                            <h:outputText value="Operator Name " />
+                            <h:inputText value="#{operator.operatorFilter}">
+                                <a4j:ajax event="blur" render="operators" execute="@this" />
+                            </h:inputText>
+                        </h:panelGroup>
                     </f:facet>
                     <h:outputText value="#{list.operatorName}"/>
                 </rich:column>
-                <rich:column breakBefore="true" sortBy="#{list.operatorCode}" filterBy="#{list.operatorCode}">
+                <rich:column>
                     <f:facet name="header">
                         <h:outputText value="Operator Code"/>
                     </f:facet>
                     <h:outputText value="#{list.operatorCode}"/>
                 </rich:column>
-                <rich:column breakBefore="true" sortBy="#{list.startDate}" filterBy="#{list.startDate}">
+                <rich:column>
                     <f:facet name="header">
                         <h:outputText value="Start Date"/>
                     </f:facet>
@@ -58,6 +80,10 @@
             </rich:dataTable>
             <rich:dataScroller id="paginator" for="operators" align="left" renderIfSinglePage="false"/>
         </h:form>
+        <rich:jQuery selector=".soper tr:odd" query="addClass('odd-row')" />
+        <rich:jQuery selector=".soper tr:even" query="addClass('even-row')" />
+        <rich:jQuery selector=".soper tr" event="mouseover" query="jQuery(this).addClass('active-row')" />
+        <rich:jQuery selector=".soper tr" event="mouseout" query="jQuery(this).removeClass('active-row')" />
     </h:body>
 
 </h:panelGrid>

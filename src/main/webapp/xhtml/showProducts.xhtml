@@ -6,39 +6,31 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:a4j="http://richfaces.org/a4j">
 
-    <style>
-        .center {
-            text-align: center;
-            color: orangered;
-        }
-    </style>
-
     <h:head>
         <title>Products Overview</title>
     </h:head>
     <h:body>
         <h:form id="productForm">
-            <rich:dataTable id="products" value="#{product.getProducts()}" var="list"
-                            onRowMouseOver="this.style.backgroundColor='#F1F1F1'" styleClass="center">
+            <rich:dataTable id="products" value="#{product.getProducts()}" var="list">
                 <f:facet name="header">
                     <h:outputText value="Products"/>
                 </f:facet>
-                <rich:column breakBefore="true" sortBy="#{list.productName}"
-                             filterBy="#{list.productName}">
+                <f:facet name="noData">
+                    Nothing found
+                </f:facet>
+                <rich:column>
                     <f:facet name="header">
                         <h:outputText value="Product Name"/>
                     </f:facet>
                     <h:outputText value="#{list.productName}"/>
                 </rich:column>
-                <rich:column breakBefore="true" sortBy="#{list.productCode}"
-                             filterBy="#{list.productCode}">
+                <rich:column>
                     <f:facet name="header">
                         <h:outputText value="Product Code"/>
                     </f:facet>
                     <h:outputText value="#{list.productCode}"/>
                 </rich:column>
-                <rich:column breakBefore="true" sortBy="#{list.startDate}"
-                             filterBy="#{list.startDate}">
+                <rich:column>
                     <f:facet name="header">
                         <h:outputText value="Start Date"/>
                     </f:facet>
@@ -47,6 +39,30 @@
             </rich:dataTable>
             <rich:dataScroller id="paginator" for="products" align="left" renderIfSinglePage="false"/>
         </h:form>
+
+        <rich:panel id="addProduct" style="width: 400px">
+            <f:facet name="header">
+                <h:outputText value="Add Product"/>
+            </f:facet>
+            <h:form>
+                <rich:messages ajaxRendered="true"/>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Product Name:" style="font-size: small"/>
+                    <h:inputText id="productName" required="true" value="#{product.name}">
+                        <f:validateLength minimum="3" maximum="20"/>
+                    </h:inputText>
+                    <h:outputText value="Product Code:" style="font-size: small"/>
+                    <h:inputText id="productCode" required="true" value="#{product.code}">
+                        <f:validateLength minimum="3" maximum="6"/>
+                    </h:inputText>
+                    <br/>
+                    <f:facet name="footer">
+                        <a4j:commandButton value="Save" style="font-size: 15px; align-items: center" actionListener="#{product.addProduct()}"/>
+                    </f:facet>
+                </h:panelGrid>
+            </h:form>
+        </rich:panel>
+
     </h:body>
 
 </h:panelGrid>

@@ -1,6 +1,8 @@
 package web.managedbeans;
 
 import model.Country;
+import org.richfaces.component.SortOrder;
+import org.richfaces.model.Filter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,9 @@ import org.springframework.stereotype.Component;
 import service.CountryService;
 import web.util.FacesUtil;
 
+import javax.faces.model.SelectItem;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +29,9 @@ public class CountryBean implements Serializable {
     private String code;
     private Date startDate;
     private Date endDate;
+
+    private String countryFilter;
+    private SortOrder countriesOrder = SortOrder.unsorted;
 
     @Autowired
     private CountryService countryService;
@@ -51,11 +58,53 @@ public class CountryBean implements Serializable {
         }
     }
 
+    public Filter<?> getFilterCountry() {
+        return new Filter<Country>() {
+            public boolean accept(Country c) {
+                String country = getCountryFilter();
+                return country == null || country.length() == 0 || country.equals(c.getCountryName());
+            }
+        };
+    }
+
+    public List<SelectItem> getCountryOptions() {
+        List<SelectItem> result = new ArrayList<>();
+        result.add(new SelectItem("", ""));
+        for (Country countryList : getCountries()) {
+            result.add(new SelectItem(countryList.getCountryName()));
+        }
+        return result;
+    }
+
+    public void sortByName() {
+
+        if (countriesOrder.equals(SortOrder.ascending)) {
+            setCountriesOrder(SortOrder.descending);
+        } else {
+            setCountriesOrder(SortOrder.ascending);
+        }
+    }
+
     public void clear() {
         setName("");
         setCode("");
     }
 
+    public String getCountryFilter() {
+        return countryFilter;
+    }
+
+    public void setCountryFilter(String countryFilter) {
+        this.countryFilter = countryFilter;
+    }
+
+    public SortOrder getCountriesOrder() {
+        return countriesOrder;
+    }
+
+    public void setCountriesOrder(SortOrder countriesOrder) {
+        this.countriesOrder = countriesOrder;
+    }
 
     public CountryService getCountryService() {
         return countryService;
