@@ -77,7 +77,6 @@ public class CountryBean implements Serializable {
     }
 
     public void sortByName() {
-
         if (countriesOrder.equals(SortOrder.ascending)) {
             setCountriesOrder(SortOrder.descending);
         } else {

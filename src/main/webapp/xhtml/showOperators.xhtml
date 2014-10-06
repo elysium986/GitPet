@@ -37,10 +37,11 @@
                 <f:facet name="noData">
                     Nothing found
                 </f:facet>
-                <rich:column filterValue="#{operator.countryFilter}" filterExpression="#{fn:containsIgnoreCase(list.country.countryName, operator.countryFilter)}">
+                <rich:column sortBy="#{list.country.countryName}" sortOrder="#{operator.countriesOrder}"
+                        filterValue="#{operator.countryFilter}" filterExpression="#{fn:containsIgnoreCase(list.country.countryName, operator.countryFilter)}">
                     <f:facet name="header">
+                        <a4j:commandLink value="Country " render="operators" action="#{operator.sortByCountry()}" />
                         <h:panelGroup>
-                            <h:outputText value="Country " />
                             <h:inputText value="#{operator.countryFilter}">
                                 <a4j:ajax event="blur" render="operators" execute="@this" />
                             </h:inputText>
@@ -54,10 +55,11 @@
                     </f:facet>
                     <h:outputText value="#{list.country.countryCode}"/>
                 </rich:column>
-                <rich:column filterValue="#{operator.operatorFilter}" filterExpression="#{fn:containsIgnoreCase(list.operatorName, operator.operatorFilter)}">
+                <rich:column sortBy="#{list.operatorName}" sortOrder="#{operator.operatorsOrder}"
+                        filterValue="#{operator.operatorFilter}" filterExpression="#{fn:containsIgnoreCase(list.operatorName, operator.operatorFilter)}">
                     <f:facet name="header">
+                        <a4j:commandLink value="Operator Name " render="operators" action="#{operator.sortByOperator()}" />
                         <h:panelGroup>
-                            <h:outputText value="Operator Name " />
                             <h:inputText value="#{operator.operatorFilter}">
                                 <a4j:ajax event="blur" render="operators" execute="@this" />
                             </h:inputText>

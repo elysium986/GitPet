@@ -2,6 +2,7 @@ package web.managedbeans;
 
 import model.Country;
 import model.Operator;
+import org.richfaces.component.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class OperatorBean implements Serializable {
 
     private String operatorFilter;
     private String countryFilter;
+    private SortOrder countriesOrder = SortOrder.unsorted;
+    private SortOrder operatorsOrder = SortOrder.unsorted;
 
     private String name;
     private String code;
@@ -44,6 +47,38 @@ public class OperatorBean implements Serializable {
         operator.setOperatorName(name);
         operator.setOperatorCode(code);
 
+    }
+
+    public void sortByCountry() {
+        if (countriesOrder.equals(SortOrder.ascending)) {
+            setCountriesOrder(SortOrder.descending);
+        } else {
+            setCountriesOrder(SortOrder.ascending);
+        }
+    }
+
+    public void sortByOperator() {
+        if (operatorsOrder.equals(SortOrder.ascending)) {
+            setOperatorsOrder(SortOrder.descending);
+        } else {
+            setOperatorsOrder(SortOrder.ascending);
+        }
+    }
+
+    public SortOrder getOperatorsOrder() {
+        return operatorsOrder;
+    }
+
+    public void setOperatorsOrder(SortOrder operatorsOrder) {
+        this.operatorsOrder = operatorsOrder;
+    }
+
+    public SortOrder getCountriesOrder() {
+        return countriesOrder;
+    }
+
+    public void setCountriesOrder(SortOrder countriesOrder) {
+        this.countriesOrder = countriesOrder;
     }
 
     public String getCountryFilter() {
