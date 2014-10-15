@@ -2,17 +2,22 @@ package web.managedbeans;
 
 import model.Country;
 import model.Operator;
+import model.Product;
 import org.richfaces.component.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import service.CountryService;
 import service.OperatorService;
+import service.ProductService;
 import web.util.FacesUtil;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -36,6 +41,7 @@ public class OperatorBean implements Serializable {
     private String code;
     private Country country;
     private Date startDate;
+    private List<Product> chosenProducts = new ArrayList<Product>();
 
     public List<Operator> getOperatorsList() {
         return operatorService.findAll();
@@ -47,6 +53,8 @@ public class OperatorBean implements Serializable {
         operator.setCountry(country);
         operator.setOperatorName(name);
         operator.setOperatorCode(code);
+        operator.setProducts(new HashSet<Product>(chosenProducts));
+        operator.setStartDate(new Date());
 
         try {
             operatorService.save(operator);
@@ -151,4 +159,13 @@ public class OperatorBean implements Serializable {
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
+
+    public List<Product> getChosenProducts() {
+        return chosenProducts;
+    }
+
+    public void setChosenProducts(List<Product> chosenProducts) {
+        this.chosenProducts = chosenProducts;
+    }
+
 }

@@ -13,9 +13,7 @@ import web.util.FacesUtil;
 
 import javax.faces.model.SelectItem;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Alexander Khodakovskyi on 03/10/14.
@@ -38,7 +36,14 @@ public class CountryBean implements Serializable {
 
 
     public List<Country> getCountries() {
-        return countryService.findAll();
+        List<Country> countries = countryService.findAll();
+        Collections.sort(countries, new Comparator<Country>() {
+            @Override
+            public int compare(Country c1, Country c2) {
+                return c1.getCountryName().compareTo(c2.getCountryName());
+            }
+        });
+        return countries;
     }
 
     public void addCountry() {
@@ -85,8 +90,8 @@ public class CountryBean implements Serializable {
     }
 
     public void clear() {
-        setName(null);
-        setCode(null);
+        setName("");
+        setCode("");
     }
 
     public String getCountryFilter() {

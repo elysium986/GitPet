@@ -6,7 +6,8 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:a4j="http://richfaces.org/a4j"
         xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-        xmlns:of="http://omnifaces.org/functions">
+        xmlns:of="http://omnifaces.org/functions"
+        xmlns:c="http://java.sun.com/jstl/core">
 
     <h:outputStylesheet>
         .even-row {
@@ -91,6 +92,42 @@
             </rich:dataTable>
             <rich:dataScroller id="paginator" for="operators" align="left" renderIfSinglePage="false"/>
         </h:form>
+        <br/>
+        <rich:panel id="addOperator" style="width: 400px">
+            <f:facet name="header">
+                <h:outputText value="Add Operator"/>
+            </f:facet>
+            <h:form>
+                <rich:messages ajaxRendered="true"/>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Operator Name:" style="font-size: small"/>
+                    <h:inputText id="operatorName" required="true" requiredMessage="Operator Name is required!" value="#{operator.name}">
+                        <f:validateLength minimum="3" maximum="20"/>
+                    </h:inputText>
+                    <h:outputText value="Operator Code:" style="font-size: small"/>
+                    <h:inputText id="operatorCode" required="true" requiredMessage="Operator Code is required!" value="#{operator.code}">
+                        <f:validateLength minimum="2" maximum="6"/>
+                    </h:inputText>
+                    <h:selectOneMenu id="countrySelect" value="#{operator.country}" required="true" requiredMessage="Please select a country!">
+                        <f:selectItem itemLabel="Choose Country"/>
+                        <c:forEach items="#{country.getCountries()}" var="c">
+                            <f:selectItem itemLabel="#{c.countryName}" itemValue="#{c}"/>
+                        </c:forEach>
+                    </h:selectOneMenu>
+                    <h:selectManyListbox id="productSelect" value="#{operator.chosenProducts}" required="true" requiredMessage="Please select at least one product!">
+                        <f:selectItem itemLabel="Choose Products"/>
+                        <c:forEach items="#{product.getProducts()}" var="pr">
+                            <f:selectItem itemLabel="#{pr.productName}" itemValue="#{pr}"/>
+                        </c:forEach>
+                    </h:selectManyListbox>
+                    <br/>
+                    <f:facet name="footer">
+                        <a4j:commandButton value="Save" style="font-size: 15px" actionListener="#{operator.addOperator()}"/>
+                    </f:facet>
+                </h:panelGrid>
+            </h:form>
+        </rich:panel>
+
         <rich:jQuery selector=".soper tr:odd" query="addClass('odd-row')" />
         <rich:jQuery selector=".soper tr:even" query="addClass('even-row')" />
         <rich:jQuery selector=".soper tr" event="mouseover" query="jQuery(this).addClass('active-row')" />
