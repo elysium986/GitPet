@@ -1,7 +1,7 @@
 package web.converter;
 
 import model.Product;
-import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import service.ProductService;
@@ -22,7 +22,7 @@ public class ProductConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
         Product product = null;
-        if (NumberUtils.isNumber(s)) {
+        if (StringUtils.isNotBlank(s)) {
             product = productService.find(s);
         }
         return product;
