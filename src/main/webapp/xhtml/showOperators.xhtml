@@ -108,13 +108,13 @@
                     <h:inputText id="operatorCode" required="true" requiredMessage="Operator Code is required!" value="#{operator.code}">
                         <f:validateLength minimum="2" maximum="6"/>
                     </h:inputText>
-                    <h:selectOneMenu id="countrySelect" value="#{operator.country}" required="true" requiredMessage="Please select a country!">
+                    <h:selectOneMenu id="countrySelect" value="#{operator.country}" converter="#{countryConverter}" required="true" requiredMessage="Please select a country!">
                         <f:selectItem itemLabel="Choose Country"/>
                         <c:forEach items="#{country.getCountries()}" var="c">
                             <f:selectItem itemLabel="#{c.countryName}" itemValue="#{c}"/>
                         </c:forEach>
                     </h:selectOneMenu>
-                    <h:selectManyListbox id="productSelect" value="#{operator.chosenProducts}" required="true" requiredMessage="Please select at least one product!">
+                    <h:selectManyListbox id="productSelect" value="#{operator.chosenProducts}" converter="#{productConverter}" required="true" requiredMessage="Please select at least one product!">
                         <f:selectItem itemLabel="Choose Products"/>
                         <c:forEach items="#{product.getProducts()}" var="pr">
                             <f:selectItem itemLabel="#{pr.productName}" itemValue="#{pr}"/>

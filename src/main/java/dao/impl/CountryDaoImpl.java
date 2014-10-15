@@ -23,4 +23,9 @@ public class CountryDaoImpl extends HibernateDaoSupport implements CountryDao {
     public void save(Country country) {
         getHibernateTemplate().save(country);
     }
+
+    @Override
+    public Country find(String name) {
+        return (Country)getHibernateTemplate().find("from Country where countryName = ?", name).get(0);
+    }
 }

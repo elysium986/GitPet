@@ -12,4 +12,6 @@ public interface CountryService {
     List findAll();
 
     void save(Country country);
+
+    Country find(String name);
 }

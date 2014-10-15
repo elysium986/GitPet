@@ -32,6 +32,11 @@ public class CountryServiceImpl implements CountryService {
         countryDao.save(country);
     }
 
+    @Override
+    public Country find(String name) {
+        return countryDao.find(name);
+    }
+
     public CountryDao getCountryDao() {
         return countryDao;
     }
