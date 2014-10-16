@@ -55,6 +55,10 @@
                     <h:inputText id="productCode" required="true" value="#{product.code}">
                         <f:validateLength minimum="3" maximum="6"/>
                     </h:inputText>
+                    <h:outputText value="Product Description:" style="font-size: small"/>
+                    <h:inputTextarea id="productDescription" required="false" value="#{product.description}">
+                        <f:validateLength maximum="60"/>
+                    </h:inputTextarea>
                     <br/>
                     <f:facet name="footer">
                         <a4j:commandButton value="Save" style="font-size: 15px; align-items: center" actionListener="#{product.addProduct()}" render="productForm"/>

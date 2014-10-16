@@ -1,36 +1,36 @@
 package web.converter;
 
-import model.Country;
+import model.Operator;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import service.CountryService;
+import service.OperatorService;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
 /**
- * Created by Alexander Khodakovskyi on 15/10/14.
+ * Created by Alexander Khodakovskyi on 16/10/14.
  */
-@Component("countryConverter")
-public class CountryConverter implements Converter {
+@Component("operatorConverter")
+public class OperatorConverter implements Converter {
 
     @Autowired
-    private CountryService countryService;
+    private OperatorService operatorService;
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        Country country = null;
+        Operator operator = null;
         if (StringUtils.isNotBlank(s)) {
-            country = countryService.find(s);
+            operator = operatorService.find(s);
         }
-        return country;
+        return operator;
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
-        Country country = (Country) o;
-        return country != null ? country.getCountryName() : "";
+        Operator operator = (Operator)o;
+        return operator != null ? operator.getOperatorName() : "";
     }
 }

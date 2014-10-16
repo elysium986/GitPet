@@ -28,6 +28,7 @@ public class ProductBean implements Serializable {
     private String code;
     private Date startDate;
     private Date endDate;
+    private String description;
 
     public List<Product> getProducts() {
         return productService.findAll();
@@ -39,6 +40,7 @@ public class ProductBean implements Serializable {
         product.setProductName(name);
         product.setProductCode(code);
         product.setStartDate(new Date());
+        product.setDescription(description);
 
         try {
             productService.save(product);
@@ -93,5 +95,13 @@ public class ProductBean implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

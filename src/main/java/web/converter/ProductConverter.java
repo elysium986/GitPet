@@ -11,7 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
 /**
- * Created by id967145 on 15/10/14.
+ * Created by Alexander Khodakovskyi on 15/10/14.
  */
 @Component("productConverter")
 public class ProductConverter implements Converter {
