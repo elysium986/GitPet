@@ -37,9 +37,13 @@ public class OperatorServiceImpl implements OperatorService {
     }
 
     @Override
-    @Transactional
     public Operator find(String name) {
         return operatorDao.find(name);
+    }
+
+    @Override
+    public Operator find(Long id) {
+        return operatorDao.find(id);
     }
 
     @Override

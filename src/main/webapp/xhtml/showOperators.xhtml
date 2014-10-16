@@ -39,6 +39,16 @@
                 <f:facet name="noData">
                     Nothing found
                 </f:facet>
+                <rich:column>
+                    <f:facet name="header">
+                        <h:outputText value="Operator Details"/>
+                    </f:facet>
+                    <h:outputLink id="operatorDetails" value="${request.contextPath}/xhtml/operatorDetails.xhtml">
+                        <f:param name="operatorId" value="#{list.id}"/>
+                        <f:param name="userAction" value="Edit"/>
+                        <h:outputText value="#{list.id}"/>
+                    </h:outputLink>
+                </rich:column>
                 <rich:column sortBy="#{list.country.countryName}" sortOrder="#{operator.countriesOrder}"
                         filterValue="#{operator.countryFilter}" filterExpression="#{fn:containsIgnoreCase(list.country.countryName, operator.countryFilter)}">
                     <f:facet name="header">
@@ -93,11 +103,8 @@
             <rich:dataScroller id="paginator" for="operators" align="left" renderIfSinglePage="false"/>
         </h:form>
         <br/>
-        <rich:panel id="addOperator" style="width: 400px">
-            <f:facet name="header">
-                <h:outputText value="Add Operator"/>
-            </f:facet>
-            <h:form>
+        <rich:collapsiblePanel id="addOperator" header="Add Operator" style="width: 500px">
+            <h:form id="addOperatorForm">
                 <rich:messages ajaxRendered="true"/>
                 <h:panelGrid columns="2">
                     <h:outputText value="Operator Name:" style="font-size: small"/>
@@ -108,25 +115,27 @@
                     <h:inputText id="operatorCode" required="true" requiredMessage="Operator Code is required!" value="#{operator.code}">
                         <f:validateLength minimum="2" maximum="6"/>
                     </h:inputText>
+                    <h:outputText value="Choose Country:" style="font-size: small"/>
                     <h:selectOneMenu id="countrySelect" value="#{operator.country}" converter="#{countryConverter}" required="true" requiredMessage="Please select a country!">
-                        <f:selectItem itemLabel="Choose Country"/>
+                        <f:selectItem itemLabel=""/>
                         <c:forEach items="#{country.getCountries()}" var="c">
                             <f:selectItem itemLabel="#{c.countryName}" itemValue="#{c}"/>
                         </c:forEach>
                     </h:selectOneMenu>
-                    <h:selectManyListbox id="productSelect" value="#{operator.chosenProducts}" converter="#{productConverter}" required="true" requiredMessage="Please select at least one product!">
-                        <f:selectItem itemLabel="Choose Products"/>
+                    <h:outputText value="Choose Product(s):" style="font-size: small"/>
+                    <h:selectManyListbox id="productSelect" hideNoSelectionOption="true" style="height: 60px" value="#{operator.chosenProducts}" converter="#{productConverter}" required="true" requiredMessage="Please select at least one product!">
+                        <f:selectItem itemLabel=""/>
                         <c:forEach items="#{product.getProducts()}" var="pr">
                             <f:selectItem itemLabel="#{pr.productName}" itemValue="#{pr}"/>
                         </c:forEach>
                     </h:selectManyListbox>
                     <br/>
                     <f:facet name="footer">
-                        <a4j:commandButton value="Save" style="font-size: 15px" actionListener="#{operator.addOperator()}"/>
+                        <a4j:commandButton value="Save" render="operators" style="font-size: 15px" actionListener="#{operator.addOperator()}" action="#{operator.clear('addOperatorForm')}"/>
                     </f:facet>
                 </h:panelGrid>
             </h:form>
-        </rich:panel>
+        </rich:collapsiblePanel>
 
         <rich:jQuery selector=".soper tr:odd" query="addClass('odd-row')" />
         <rich:jQuery selector=".soper tr:even" query="addClass('even-row')" />

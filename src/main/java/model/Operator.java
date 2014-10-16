@@ -102,4 +102,13 @@ public class Operator implements Serializable {
     public void setProducts(Set<Product> products) {
         this.products = products;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Operator other = (Operator) obj;
+        return !(operatorName == null ? other.getOperatorName() != null : !operatorName.equals(other.operatorName));
+    }
 }

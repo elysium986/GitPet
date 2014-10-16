@@ -44,15 +44,15 @@
             <f:facet name="header">
                 <h:outputText value="Add Product"/>
             </f:facet>
-            <h:form>
+            <h:form id="addProductForm">
                 <rich:messages ajaxRendered="true"/>
                 <h:panelGrid columns="2">
                     <h:outputText value="Product Name:" style="font-size: small"/>
-                    <h:inputText id="productName" required="true" value="#{product.name}">
+                    <h:inputText id="productName" required="true" requiredMessage="Product Name is required!" value="#{product.name}">
                         <f:validateLength minimum="3" maximum="20"/>
                     </h:inputText>
                     <h:outputText value="Product Code:" style="font-size: small"/>
-                    <h:inputText id="productCode" required="true" value="#{product.code}">
+                    <h:inputText id="productCode" required="true" requiredMessage="Product Code is required!" value="#{product.code}">
                         <f:validateLength minimum="3" maximum="6"/>
                     </h:inputText>
                     <h:outputText value="Product Description:" style="font-size: small"/>

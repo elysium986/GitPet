@@ -20,7 +20,7 @@ import java.util.*;
  */
 @Component("countryBean")
 @Scope("session")
-public class CountryBean implements Serializable {
+public class CountryBean extends AbstractBean implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(CountryBean.class);
 
     private String name;
@@ -57,7 +57,6 @@ public class CountryBean implements Serializable {
             countryService.save(country);
             FacesUtil.info("Country : " + name + " was successfully added.");
             log.info("Country : " + name + " was successfully added.");
-            clear();
         } catch (Exception e) {
             FacesUtil.error("Country : " + name + " already exists!");
         }
@@ -87,11 +86,6 @@ public class CountryBean implements Serializable {
         } else {
             setCountriesOrder(SortOrder.ascending);
         }
-    }
-
-    public void clear() {
-        setName("");
-        setCode("");
     }
 
     public String getCountryFilter() {

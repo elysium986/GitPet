@@ -17,5 +17,7 @@ public interface OperatorService {
 
     Operator find(String name);
 
+    Operator find(Long id);
+
     List findAll();
 }

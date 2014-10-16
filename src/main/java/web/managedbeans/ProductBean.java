@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Component("productBean")
 @Scope("session")
-public class ProductBean implements Serializable {
+public class ProductBean extends AbstractBean implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(ProductBean.class);
 
     @Autowired
@@ -46,15 +46,9 @@ public class ProductBean implements Serializable {
             productService.save(product);
             FacesUtil.info("Product : " + name + " was successfully added.");
             log.info("Product : " + name + " was successfully added.");
-            clear();
         } catch (Exception e) {
             FacesUtil.error("Product : " + name + " already exists!");
         }
-    }
-
-    public void clear() {
-        setName(null);
-        setCode(null);
     }
 
     public ProductService getProductService() {

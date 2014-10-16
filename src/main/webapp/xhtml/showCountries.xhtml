@@ -45,20 +45,20 @@
             <f:facet name="header">
                 <h:outputText value="Add Country"/>
             </f:facet>
-            <h:form>
+            <h:form id="addCountryForm">
                 <rich:messages ajaxRendered="true"/>
                 <h:panelGrid columns="2">
                     <h:outputText value="Country Name:" style="font-size: small"/>
-                    <h:inputText id="countryName" required="true" value="#{country.name}">
+                    <h:inputText id="countryName" required="true" requiredMessage="Country Name is required!" value="#{country.name}">
                         <f:validateLength minimum="3" maximum="20"/>
                     </h:inputText>
                     <h:outputText value="Country Code:" style="font-size: small"/>
-                    <h:inputText id="countryCode" required="true" value="#{country.code}">
+                    <h:inputText id="countryCode" required="true" requiredMessage="Country Code is required!" value="#{country.code}">
                         <f:validateLength minimum="3" maximum="3"/>
                     </h:inputText>
                     <br/>
                     <f:facet name="footer">
-                        <a4j:commandButton value="Save" style="font-size: 15px" actionListener="#{country.addCountry()}" render="countryForm"/>
+                        <a4j:commandButton value="Save" style="font-size: 15px" actionListener="#{country.addCountry()}" render="countryForm" action="#{country.clear('addCountryForm')}"/>
                     </f:facet>
                 </h:panelGrid>
             </h:form>

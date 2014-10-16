@@ -9,9 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import service.CountryService;
 import service.OperatorService;
-import service.ProductService;
 import web.util.FacesUtil;
 
 import java.io.Serializable;
@@ -26,7 +24,7 @@ import java.util.List;
 
 @Component("operatorBean")
 @Scope("session")
-public class OperatorBean implements Serializable {
+public class OperatorBean extends AbstractBean implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(OperatorBean.class);
 
     @Autowired
@@ -49,27 +47,19 @@ public class OperatorBean implements Serializable {
 
     public void addOperator() {
         Operator operator = new Operator();
-
         operator.setCountry(country);
         operator.setOperatorName(name);
         operator.setOperatorCode(code);
         operator.setProducts(new HashSet<Product>(chosenProducts));
         operator.setStartDate(new Date());
-
         try {
             operatorService.save(operator);
             FacesUtil.info("Operator : " + name  + " was successfully added.");
-            log.info("Operator : " + name  + " was successfully added.");
-            clear();
+            log.info("Operator : " + name + " was successfully added.");
         } catch (Exception e) {
             FacesUtil.error("Operator : " + name  + " already exists!");
         }
 
-    }
-
-    public void clear() {
-        setName(null);
-        setCode(null);
     }
 
     public void sortByCountry() {
