@@ -4,14 +4,26 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:rich="http://richfaces.org/rich"
         xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:a4j="http://richfaces.org/a4j">
+        xmlns:a4j="http://richfaces.org/a4j"
+        xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+        xmlns:of="http://omnifaces.org/functions"
+        xmlns:c="http://java.sun.com/jstl/core">
 
-    <style>
-        .center {
-            text-align: center;
-            color: orangered;
+    <h:outputStylesheet>
+        .even-row {
+            background-color: #FCFFFE;
         }
-    </style>
+
+        .odd-row {
+            background-color: #ECF3FE;
+        }
+
+        .active-row {
+            background-color: #FFEBDA !important;
+            cursor: pointer;
+            text-align: center;
+        }
+    </h:outputStylesheet>
 
     <h:head>
         <title>Operators Overview</title>
@@ -19,37 +31,69 @@
     <h:body>
         <h:form id="operatorForm">
             <rich:dataTable id="operators" value="#{operator.getOperatorsList()}" var="list"
-                            onRowMouseOver="this.style.backgroundColor='#F1F1F1'" styleClass="center">
+                            rowClasses="odd-row, even-row"
+                            styleClass="soper">
                 <f:facet name="header">
                     <h:outputText value="Operators"/>
                 </f:facet>
-                <rich:column breakBefore="true" sortBy="#{list.country.countryName}"
-                             filterBy="#{list.country.countryName}">
+                <f:facet name="noData">
+                    Nothing found
+                </f:facet>
+                <rich:column>
                     <f:facet name="header">
-                        <h:outputText value="Country"/>
+                        <h:outputText value="Operator Details"/>
+                    </f:facet>
+                    <h:outputLink id="operatorDetails" value="${request.contextPath}/xhtml/operatorDetails.xhtml">
+                        <f:param name="operatorId" value="#{list.id}"/>
+                        <f:param name="userAction" value="Edit"/>
+                        <h:outputText value="#{list.id}"/>
+                    </h:outputLink>
+                </rich:column>
+                <rich:column sortBy="#{list.country.countryName}" sortOrder="#{operator.countriesOrder}"
+                        filterValue="#{operator.countryFilter}" filterExpression="#{fn:containsIgnoreCase(list.country.countryName, operator.countryFilter)}">
+                    <f:facet name="header">
+                        <a4j:commandLink value="Country " render="operators" action="#{operator.sortByCountry()}" />
+                        <h:panelGroup>
+                            <h:inputText value="#{operator.countryFilter}">
+                                <a4j:ajax event="blur" render="operators" execute="@this" />
+                            </h:inputText>
+                        </h:panelGroup>
                     </f:facet>
                     <h:outputText value="#{list.country.countryName}"/>
                 </rich:column>
-                <rich:column breakBefore="true" sortBy="#{list.country.countryCode}"
-                             filterBy="#{list.country.countryCode}">
+                <rich:column>
                     <f:facet name="header">
                         <h:outputText value="ISO"/>
                     </f:facet>
                     <h:outputText value="#{list.country.countryCode}"/>
                 </rich:column>
-                <rich:column breakBefore="true" sortBy="#{list.operatorName}" filterBy="#{list.operatorName}">
+                <rich:column sortBy="#{list.operatorName}" sortOrder="#{operator.operatorsOrder}"
+                        filterValue="#{operator.operatorFilter}" filterExpression="#{fn:containsIgnoreCase(list.operatorName, operator.operatorFilter)}">
                     <f:facet name="header">
-                        <h:outputText value="Operator Name"/>
+                        <a4j:commandLink value="Operator Name " render="operators" action="#{operator.sortByOperator()}" />
+                        <h:panelGroup>
+                            <h:inputText value="#{operator.operatorFilter}">
+                                <a4j:ajax event="blur" render="operators" execute="@this" />
+                            </h:inputText>
+                        </h:panelGroup>
                     </f:facet>
                     <h:outputText value="#{list.operatorName}"/>
                 </rich:column>
-                <rich:column breakBefore="true" sortBy="#{list.operatorCode}" filterBy="#{list.operatorCode}">
+                <rich:column>
                     <f:facet name="header">
                         <h:outputText value="Operator Code"/>
                     </f:facet>
                     <h:outputText value="#{list.operatorCode}"/>
                 </rich:column>
-                <rich:column breakBefore="true" sortBy="#{list.startDate}" filterBy="#{list.startDate}">
+                <rich:column>
+                    <f:facet name="header">
+                        <h:outputText value="Available Products "/>
+                    </f:facet>
+                    <ui:repeat value="#{of:setToList(list.products)}" var="p">
+                        <h:outputText value="#{p.productName}"/><br/>
+                    </ui:repeat>
+                </rich:column>
+                <rich:column>
                     <f:facet name="header">
                         <h:outputText value="Start Date"/>
                     </f:facet>
@@ -58,6 +102,45 @@
             </rich:dataTable>
             <rich:dataScroller id="paginator" for="operators" align="left" renderIfSinglePage="false"/>
         </h:form>
+        <br/>
+        <rich:collapsiblePanel id="addOperator" header="Add Operator" style="width: 500px">
+            <h:form id="addOperatorForm">
+                <rich:messages ajaxRendered="true"/>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Operator Name:" style="font-size: small"/>
+                    <h:inputText id="operatorName" required="true" requiredMessage="Operator Name is required!" value="#{operator.name}">
+                        <f:validateLength minimum="3" maximum="20"/>
+                    </h:inputText>
+                    <h:outputText value="Operator Code:" style="font-size: small"/>
+                    <h:inputText id="operatorCode" required="true" requiredMessage="Operator Code is required!" value="#{operator.code}">
+                        <f:validateLength minimum="2" maximum="6"/>
+                    </h:inputText>
+                    <h:outputText value="Choose Country:" style="font-size: small"/>
+                    <h:selectOneMenu id="countrySelect" value="#{operator.country}" converter="#{countryConverter}" required="true" requiredMessage="Please select a country!">
+                        <f:selectItem itemLabel=""/>
+                        <c:forEach items="#{country.getCountries()}" var="c">
+                            <f:selectItem itemLabel="#{c.countryName}" itemValue="#{c}"/>
+                        </c:forEach>
+                    </h:selectOneMenu>
+                    <h:outputText value="Choose Product(s):" style="font-size: small"/>
+                    <h:selectManyListbox id="productSelect" hideNoSelectionOption="true" style="height: 60px" value="#{operator.chosenProducts}" converter="#{productConverter}" required="true" requiredMessage="Please select at least one product!">
+                        <f:selectItem itemLabel=""/>
+                        <c:forEach items="#{product.getProducts()}" var="pr">
+                            <f:selectItem itemLabel="#{pr.productName}" itemValue="#{pr}"/>
+                        </c:forEach>
+                    </h:selectManyListbox>
+                    <br/>
+                    <f:facet name="footer">
+                        <a4j:commandButton value="Save" render="operators" style="font-size: 15px" actionListener="#{operator.addOperator()}" action="#{operator.clear('addOperatorForm')}"/>
+                    </f:facet>
+                </h:panelGrid>
+            </h:form>
+        </rich:collapsiblePanel>
+
+        <rich:jQuery selector=".soper tr:odd" query="addClass('odd-row')" />
+        <rich:jQuery selector=".soper tr:even" query="addClass('even-row')" />
+        <rich:jQuery selector=".soper tr" event="mouseover" query="jQuery(this).addClass('active-row')" />
+        <rich:jQuery selector=".soper tr" event="mouseout" query="jQuery(this).removeClass('active-row')" />
     </h:body>
 
 </h:panelGrid>

@@ -36,6 +36,11 @@ public class OperatorDaoImpl extends HibernateDaoSupport implements OperatorDao 
     }
 
     @Override
+    public Operator find(Long id) {
+        return (Operator) getHibernateTemplate().find("from Operator where id = ?", id).get(0);
+    }
+
+    @Override
     public List findAll() {
         return getHibernateTemplate().find("from Operator");
     }

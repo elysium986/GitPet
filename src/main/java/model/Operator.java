@@ -40,7 +40,7 @@ public class Operator implements Serializable {
     @Column(name = "END_DATE")
     private Date endDate;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "OPERATOR_PRODUCT",
             joinColumns = @JoinColumn(name = "FK_OPERATOR"),
@@ -101,5 +101,14 @@ public class Operator implements Serializable {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Operator other = (Operator) obj;
+        return !(operatorName == null ? other.getOperatorName() != null : !operatorName.equals(other.operatorName));
     }
 }

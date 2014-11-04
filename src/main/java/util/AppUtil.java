@@ -50,7 +50,5 @@ public class AppUtil {
 
         operatorService.save(newOperator);
 
-
-        DetachedCriteria criteria = DetachedCriteria.forClass(Country.class).add(Restrictions.disjunction()).add(Property.forName("countryCode").in(new String []{"UKR", "JAP"}));
     }
 }

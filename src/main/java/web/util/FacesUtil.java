@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.text.MessageFormat;
 import java.util.Iterator;
@@ -106,5 +107,13 @@ public class FacesUtil {
         MessageFormat form = new MessageFormat(message);
         return form.format(parameters);
 
+    }
+
+    public static String getRequestParam(String paramName) {
+        return (String) getExternalContext().getRequestParameterMap().get(paramName);
+    }
+
+    public static ExternalContext getExternalContext() {
+        return getFacesContext().getExternalContext();
     }
 }

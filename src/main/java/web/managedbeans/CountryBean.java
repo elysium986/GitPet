@@ -1,6 +1,8 @@
 package web.managedbeans;
 
 import model.Country;
+import org.richfaces.component.SortOrder;
+import org.richfaces.model.Filter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +11,16 @@ import org.springframework.stereotype.Component;
 import service.CountryService;
 import web.util.FacesUtil;
 
+import javax.faces.model.SelectItem;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Alexander Khodakovskyi on 03/10/14.
  */
 @Component("countryBean")
 @Scope("session")
-public class CountryBean implements Serializable {
+public class CountryBean extends AbstractBean implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(CountryBean.class);
 
     private String name;
@@ -26,12 +28,22 @@ public class CountryBean implements Serializable {
     private Date startDate;
     private Date endDate;
 
+    private String countryFilter;
+    private SortOrder countriesOrder = SortOrder.unsorted;
+
     @Autowired
     private CountryService countryService;
 
 
     public List<Country> getCountries() {
-        return countryService.findAll();
+        List<Country> countries = countryService.findAll();
+        Collections.sort(countries, new Comparator<Country>() {
+            @Override
+            public int compare(Country c1, Country c2) {
+                return c1.getCountryName().compareTo(c2.getCountryName());
+            }
+        });
+        return countries;
     }
 
     public void addCountry() {
@@ -45,17 +57,52 @@ public class CountryBean implements Serializable {
             countryService.save(country);
             FacesUtil.info("Country : " + name + " was successfully added.");
             log.info("Country : " + name + " was successfully added.");
-            clear();
         } catch (Exception e) {
             FacesUtil.error("Country : " + name + " already exists!");
         }
     }
 
-    public void clear() {
-        setName("");
-        setCode("");
+    public Filter<?> getFilterCountry() {
+        return new Filter<Country>() {
+            public boolean accept(Country c) {
+                String country = getCountryFilter();
+                return country == null || country.length() == 0 || country.equals(c.getCountryName());
+            }
+        };
     }
 
+    public List<SelectItem> getCountryOptions() {
+        List<SelectItem> result = new ArrayList<SelectItem>();
+        result.add(new SelectItem("", ""));
+        for (Country countryList : getCountries()) {
+            result.add(new SelectItem(countryList.getCountryName()));
+        }
+        return result;
+    }
+
+    public void sortByName() {
+        if (countriesOrder.equals(SortOrder.ascending)) {
+            setCountriesOrder(SortOrder.descending);
+        } else {
+            setCountriesOrder(SortOrder.ascending);
+        }
+    }
+
+    public String getCountryFilter() {
+        return countryFilter;
+    }
+
+    public void setCountryFilter(String countryFilter) {
+        this.countryFilter = countryFilter;
+    }
+
+    public SortOrder getCountriesOrder() {
+        return countriesOrder;
+    }
+
+    public void setCountriesOrder(SortOrder countriesOrder) {
+        this.countriesOrder = countriesOrder;
+    }
 
     public CountryService getCountryService() {
         return countryService;

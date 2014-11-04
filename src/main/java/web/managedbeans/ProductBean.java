@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Component("productBean")
 @Scope("session")
-public class ProductBean implements Serializable {
+public class ProductBean extends AbstractBean implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(ProductBean.class);
 
     @Autowired
@@ -28,6 +28,7 @@ public class ProductBean implements Serializable {
     private String code;
     private Date startDate;
     private Date endDate;
+    private String description;
 
     public List<Product> getProducts() {
         return productService.findAll();
@@ -39,20 +40,15 @@ public class ProductBean implements Serializable {
         product.setProductName(name);
         product.setProductCode(code);
         product.setStartDate(new Date());
+        product.setDescription(description);
 
         try {
             productService.save(product);
             FacesUtil.info("Product : " + name + " was successfully added.");
             log.info("Product : " + name + " was successfully added.");
-            clear();
         } catch (Exception e) {
             FacesUtil.error("Product : " + name + " already exists!");
         }
-    }
-
-    public void clear() {
-        setName("");
-        setCode("");
     }
 
     public ProductService getProductService() {
@@ -93,5 +89,13 @@ public class ProductBean implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

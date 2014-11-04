@@ -90,4 +90,13 @@ public class Product implements Serializable {
     public void setOperators(List<Operator> operators) {
         this.operators = operators;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Product other = (Product) obj;
+        return !(productName == null ? other.getProductName() != null : !productName.equals(other.productName));
+    }
 }
