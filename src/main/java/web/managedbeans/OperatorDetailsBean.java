@@ -21,7 +21,7 @@ import java.util.Set;
  * Created by Alexander Khodakovskyi on 16/10/14.
  */
 @Component("operatorDetailsBean")
-@Scope("request")
+@Scope("session")
 public class OperatorDetailsBean implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(OperatorDetailsBean.class);
 
