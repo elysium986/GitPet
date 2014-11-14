@@ -12,6 +12,7 @@
     </h:head>
 
     <h:body>
+        <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <h:form id="operatorDetailsForm">
             <a4j:commandButton value="Save" render="operatorDetailsForm" actionListener="#{operatorDetails.save()}"/>
 
@@ -30,7 +31,7 @@
                             oncomplete="#{rich:component('confirmPane')}.hide();" />
 
             <rich:popupPanel id="statPane" autosized="true">
-                <h:graphicImage value="resources/images/wait.gif" alt="wait" />
+                <h:graphicImage value="/resources/images/wait.gif" alt="wait" />
                 Please wait...
             </rich:popupPanel>
 
