@@ -51,6 +51,10 @@ public class OperatorDetailsBean implements Serializable {
         }
     }
 
+    public void removeProduct() {
+
+    }
+
     public Set<Product> addProducts() {
         Set<Product> currentProducts = operator.getProducts();
         if (!selectedProducts.isEmpty()) {
@@ -58,6 +62,10 @@ public class OperatorDetailsBean implements Serializable {
             currentProducts.addAll(newProducts);
         }
         return currentProducts;
+    }
+
+    public Set<Product> getProducts() {
+        return operator.getProducts();
     }
 
     public OperatorService getOperatorService() {
