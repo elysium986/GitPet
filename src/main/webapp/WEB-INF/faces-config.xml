@@ -38,7 +38,7 @@
     <managed-bean>
         <managed-bean-name>operatorDetails</managed-bean-name>
         <managed-bean-class>web.managedbeans.OperatorDetailsBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
+        <managed-bean-scope>session</managed-bean-scope>
         <managed-property>
             <property-name>operatorService</property-name>
             <value>#{operatorService}</value>

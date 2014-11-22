@@ -1,21 +1,50 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:rich="http://richfaces.org/rich"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:a4j="http://richfaces.org/a4j"
-                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 xmlns:of="http://omnifaces.org/functions"
-                xmlns:c="http://java.sun.com/jstl/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+        >
 
     <h:head>
         <title>Operator Details</title>
     </h:head>
 
-    <h:body>
-        <h:form id="operatorDetailsForm">
-            <a4j:commandButton value="Save" render="operatorDetailsForm" actionListener="#{operatorDetails.save()}"/>
+    <h:outputStylesheet>
+        a.no-decor > img {
+            border: none;
+        }
+    </h:outputStylesheet>
+    <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()"/>
 
-        </h:form>
-    </h:body>
+    <h:form id="operatorDetailsForm">
+        <a4j:commandButton value="Save" render="products" actionListener="#{operatorDetails.save()}"/>
+
+        <rich:dataTable id="products" value="#{operatorDetails.getProducts()}" var="product">
+            <rich:column>
+                <f:facet name="header">
+                    <h:outputText value="Available Products "/>
+                </f:facet>
+                <ui:repeat value="#{of:setToList(operatorDetails.getProducts())}" var="p">
+                    <h:outputText value="#{p.productName}"/><br/>
+                </ui:repeat>
+            </rich:column>
+        </rich:dataTable>
+
+        <a4j:jsFunction name="remove" action="#{operatorDetails.removeProduct()}" render="products" execute="@this"
+                        oncomplete="#{rich:component('confirmPane')}.hide();"/>
+
+        <rich:popupPanel id="statPane" autosized="true">
+            <h:graphicImage value="/resources/images/wait.gif" alt="wait"/>
+            Please wait...
+        </rich:popupPanel>
+
+        <rich:popupPanel id="confirmPane" autosized="true">
+            Are you sure you want to delete the row?
+            <a4j:commandButton value="Cancel" onclick="#{rich:component('confirmPane')}.hide(); return false;"/>
+            <a4j:commandButton value="Delete" onclick="remove(); return false;"/>
+        </rich:popupPanel>
+    </h:form>
+
 </ui:composition>
