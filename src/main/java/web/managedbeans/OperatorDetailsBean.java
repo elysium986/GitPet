@@ -51,17 +51,20 @@ public class OperatorDetailsBean implements Serializable {
         }
     }
 
-    public void removeProduct() {
-
+    public Operator removeProduct() {
+        return null;
     }
 
-    public Set<Product> addProducts() {
-        Set<Product> currentProducts = operator.getProducts();
+    public Operator addProducts() {
         if (!selectedProducts.isEmpty()) {
+            Set<Product> currentProducts = operator.getProducts();
             Set<Product> newProducts = new HashSet<Product>(selectedProducts);
             currentProducts.addAll(newProducts);
+            operator.setProducts(currentProducts);
+
+            return operator;
         }
-        return currentProducts;
+        return null;
     }
 
     public Set<Product> getProducts() {

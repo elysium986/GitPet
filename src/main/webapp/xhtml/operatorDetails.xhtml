@@ -19,6 +19,10 @@
     <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()"/>
 
     <h:form id="operatorDetailsForm">
+        <h:outputLink render="operatorForm" value="${request.contextPath}/xhtml/mainPage.xhtml">
+            <h:outputText value="Back"/>
+        </h:outputLink>
+        <br/>
         <a4j:commandButton value="Save" render="products" actionListener="#{operatorDetails.save()}"/>
 
         <rich:dataTable id="products" value="#{operatorDetails.getProducts()}" var="product">
