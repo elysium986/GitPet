@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import service.OperatorService;
+import service.ProductService;
 import web.util.FacesUtil;
 
 import javax.annotation.PostConstruct;
+import javax.faces.event.ActionEvent;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,10 +28,14 @@ public class OperatorDetailsBean implements Serializable {
 
     @Autowired
     private OperatorService operatorService;
+    @Autowired
+    private ProductService productService;
 
     private Operator operator;
     private String operatorId;
-    private List<Product> selectedProducts = new ArrayList<Product>();
+    private boolean checked;
+    private boolean checkedAll;
+    private Set<Product> selectedProducts = new HashSet<Product>();
 
     @PostConstruct
     private void init() {
@@ -44,6 +49,7 @@ public class OperatorDetailsBean implements Serializable {
             if (operator != null) {
                 operatorService.update(operator);
                 FacesUtil.info("Operator: " + operator.getOperatorName() + " was successfully updated.");
+                selectedProducts.clear();
             }
         } catch (Exception e) {
             FacesUtil.error("An error did occur!");
@@ -64,11 +70,23 @@ public class OperatorDetailsBean implements Serializable {
 
             return operator;
         }
+        FacesUtil.warn("Please select a product!");
         return null;
     }
 
     public Set<Product> getProducts() {
         return operator.getProducts();
+    }
+
+    public List getAllProducts() {
+        return productService.findAll();
+    }
+
+    public void addSelected(ActionEvent event) {
+        Product product = (Product)event.getComponent().getParent().getAttributes().get("selectedObject");
+        if (isChecked()) {
+            selectedProducts.add(product);
+        }
     }
 
     public OperatorService getOperatorService() {
@@ -95,11 +113,35 @@ public class OperatorDetailsBean implements Serializable {
         this.operatorId = operatorId;
     }
 
-    public List<Product> getSelectedProducts() {
+    public Set<Product> getSelectedProducts() {
         return selectedProducts;
     }
 
-    public void setSelectedProducts(List<Product> selectedProducts) {
+    public void setSelectedProducts(Set<Product> selectedProducts) {
         this.selectedProducts = selectedProducts;
+    }
+
+    public ProductService getProductService() {
+        return productService;
+    }
+
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public boolean isCheckedAll() {
+        return checkedAll;
+    }
+
+    public void setCheckedAll(boolean checkedAll) {
+        this.checkedAll = checkedAll;
     }
 }
