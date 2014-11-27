@@ -23,12 +23,13 @@
             <h:outputText value="Back"/>
         </h:outputLink>
         <br/>
-        <a4j:commandButton value="Save" render="products" actionListener="#{operatorDetails.save()}"/>
+        <br/>
+        <a4j:commandButton value="Save" render="availableProducts" actionListener="#{operatorDetails.save()}"/>
 
         <rich:dataTable id="products" value="#{operatorDetails.getProducts()}" var="product">
             <rich:column>
                 <f:facet name="header">
-                    <h:outputText value="Operator Products "/>
+                    <h:outputText value="Current Products "/>
                 </f:facet>
                 <ui:repeat value="#{of:setToList(operatorDetails.getProducts())}" var="p">
                     <h:outputText value="#{p.productName}"/><br/>
@@ -51,24 +52,24 @@
         </rich:popupPanel>
     </h:form>
     <h:form id="addProductForm">
-        <rich:dataTable id="allProducts" value="#{operatorDetails.getAllProducts()}" var="ap">
+        <rich:dataTable id="availableProducts" value="#{operatorDetails.getAvailable()}" var="ap">
+            <f:facet name="noData">
+                All products are already present.
+            </f:facet>
             <rich:column>
                 <h:selectBooleanCheckbox value="#{operatorDetails.checked}">
-                    <f:attribute name="selectedObject" value="#{ap}"/>
-                    <a4j:ajax event="onclick" ajaxSingle="true"
-                                 actionListener="#{operatorDetails.addSelected}"/>
+                    <f:param name="selectedObject" value="#{ap.productName}"/>
+                    <a4j:ajax event="click" listener="#{operatorDetails.addSelected}"/>
                 </h:selectBooleanCheckbox>
             </rich:column>
             <rich:column>
                 <f:facet name="header">
                     <h:outputText value="Available Products "/>
                 </f:facet>
-                <ui:repeat value="#{operatorDetails.getAllProducts()}" var="all">
-                    <h:outputText value="#{all.productName}"/><br/>
-                </ui:repeat>
+                <h:outputText value="#{ap.productName}"/><br/>
             </rich:column>
         </rich:dataTable>
-        <a4j:commandButton value="Add Products" render="products" actionListener="#{operatorDetails.addProducts()}"/>
+        <a4j:commandButton value="Add Products" rendered="#{operatorDetails.display()}" render="products" actionListener="#{operatorDetails.addProducts()}"/>
     </h:form>
 
 </ui:composition>

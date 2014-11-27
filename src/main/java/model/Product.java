@@ -28,7 +28,7 @@ public class Product implements Serializable {
     private Date endDate;
     @Column(name = "DESCRIPTION")
     private String description;
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy ="products")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy ="products")
     /*@JoinTable(
             name = "OPERATOR_PRODUCT",
             joinColumns = @JoinColumn(name = "FK_PRODUCT"),

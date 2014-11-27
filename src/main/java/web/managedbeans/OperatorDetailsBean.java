@@ -12,17 +12,15 @@ import service.ProductService;
 import web.util.FacesUtil;
 
 import javax.annotation.PostConstruct;
-import javax.faces.event.ActionEvent;
+import javax.faces.event.FacesEvent;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Alexander Khodakovskyi on 16/10/14.
  */
 @Component("operatorDetailsBean")
-@Scope("session")
+@Scope("view")
 public class OperatorDetailsBean implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(OperatorDetailsBean.class);
 
@@ -47,6 +45,7 @@ public class OperatorDetailsBean implements Serializable {
     public void save() {
         try {
             if (operator != null) {
+                operator.setUpdated(new Date());
                 operatorService.update(operator);
                 FacesUtil.info("Operator: " + operator.getOperatorName() + " was successfully updated.");
                 selectedProducts.clear();
@@ -78,15 +77,36 @@ public class OperatorDetailsBean implements Serializable {
         return operator.getProducts();
     }
 
-    public List getAllProducts() {
-        return productService.findAll();
+    public List<Product> getAvailable() {
+        List<Product> all = productService.findAll();
+        List<Product> available = new ArrayList<Product>();
+        for (Product p : all) {
+            if (newProduct(p)) {
+                available.add(p);
+            }
+        }
+        return available;
     }
 
-    public void addSelected(ActionEvent event) {
-        Product product = (Product)event.getComponent().getParent().getAttributes().get("selectedObject");
-        if (isChecked()) {
+    public boolean display() {
+        return !getAvailable().isEmpty();
+    }
+
+    public void addSelected(FacesEvent event) {
+        String productName = FacesUtil.getRequestParam("selectedObject");
+        Product product = productService.find(productName);
+        if (isChecked() && product != null) {
             selectedProducts.add(product);
         }
+    }
+
+    private boolean newProduct(Product product) {
+        for (Product p : getProducts()) {
+            if (p.getProductCode().equals(product.getProductCode())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public OperatorService getOperatorService() {
