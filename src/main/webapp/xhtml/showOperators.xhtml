@@ -99,6 +99,12 @@
                     </f:facet>
                     <h:outputText value="#{list.startDate}" converter="javax.faces.DateTime"/>
                 </rich:column>
+                <rich:column>
+                    <f:facet name="header">
+                        <h:outputText value="Updated"/>
+                    </f:facet>
+                    <h:outputText value="#{list.updated}" converter="javax.faces.DateTime"/>
+                </rich:column>
             </rich:dataTable>
             <rich:dataScroller id="paginator" for="operators" align="left" renderIfSinglePage="false"/>
         </h:form>

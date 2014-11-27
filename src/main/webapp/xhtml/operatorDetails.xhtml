@@ -24,12 +24,12 @@
         </h:outputLink>
         <br/>
         <br/>
-        <a4j:commandButton value="Save" render="products" actionListener="#{operatorDetails.save()}"/>
+        <a4j:commandButton value="Save" render="availableProducts" actionListener="#{operatorDetails.save()}"/>
 
         <rich:dataTable id="products" value="#{operatorDetails.getProducts()}" var="product">
             <rich:column>
                 <f:facet name="header">
-                    <h:outputText value="Operator Products "/>
+                    <h:outputText value="Current Products "/>
                 </f:facet>
                 <ui:repeat value="#{of:setToList(operatorDetails.getProducts())}" var="p">
                     <h:outputText value="#{p.productName}"/><br/>
@@ -52,7 +52,10 @@
         </rich:popupPanel>
     </h:form>
     <h:form id="addProductForm">
-        <rich:dataTable id="allProducts" value="#{operatorDetails.getAllProducts()}" var="ap">
+        <rich:dataTable id="availableProducts" value="#{operatorDetails.getAvailable()}" var="ap">
+            <f:facet name="noData">
+                All products are already present.
+            </f:facet>
             <rich:column>
                 <h:selectBooleanCheckbox value="#{operatorDetails.checked}">
                     <f:param name="selectedObject" value="#{ap.productName}"/>
@@ -66,7 +69,7 @@
                 <h:outputText value="#{ap.productName}"/><br/>
             </rich:column>
         </rich:dataTable>
-        <a4j:commandButton value="Add Products" render="products" actionListener="#{operatorDetails.addProducts()}"/>
+        <a4j:commandButton value="Add Products" rendered="#{operatorDetails.display()}" render="products" actionListener="#{operatorDetails.addProducts()}"/>
     </h:form>
 
 </ui:composition>

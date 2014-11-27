@@ -39,6 +39,8 @@ public class Operator implements Serializable {
     private Date startDate;
     @Column(name = "END_DATE")
     private Date endDate;
+    @Column(name = "UPDATED")
+    private Date updated;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
@@ -101,6 +103,14 @@ public class Operator implements Serializable {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
     }
 
     @Override
