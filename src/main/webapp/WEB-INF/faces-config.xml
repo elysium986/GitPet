@@ -38,10 +38,14 @@
     <managed-bean>
         <managed-bean-name>operatorDetails</managed-bean-name>
         <managed-bean-class>web.managedbeans.OperatorDetailsBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>view</managed-bean-scope>
         <managed-property>
             <property-name>operatorService</property-name>
             <value>#{operatorService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>productService</property-name>
+            <value>#{productService}</value>
         </managed-property>
     </managed-bean>
 

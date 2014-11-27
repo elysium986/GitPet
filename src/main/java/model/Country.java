@@ -22,7 +22,7 @@ public class Country implements Serializable {
     private String countryName;
     @Column(name = "COUNTRY_CODE", unique = true, nullable = false)
     private String countryCode;
-    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Operator> operators;
     @Column(name = "START_DATE")
     private Date startDate;

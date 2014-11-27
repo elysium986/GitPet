@@ -23,6 +23,7 @@
             <h:outputText value="Back"/>
         </h:outputLink>
         <br/>
+        <br/>
         <a4j:commandButton value="Save" render="products" actionListener="#{operatorDetails.save()}"/>
 
         <rich:dataTable id="products" value="#{operatorDetails.getProducts()}" var="product">
@@ -54,18 +55,15 @@
         <rich:dataTable id="allProducts" value="#{operatorDetails.getAllProducts()}" var="ap">
             <rich:column>
                 <h:selectBooleanCheckbox value="#{operatorDetails.checked}">
-                    <f:attribute name="selectedObject" value="#{ap}"/>
-                    <a4j:ajax event="onclick" ajaxSingle="true"
-                                 actionListener="#{operatorDetails.addSelected}"/>
+                    <f:param name="selectedObject" value="#{ap.productName}"/>
+                    <a4j:ajax event="click" listener="#{operatorDetails.addSelected}"/>
                 </h:selectBooleanCheckbox>
             </rich:column>
             <rich:column>
                 <f:facet name="header">
                     <h:outputText value="Available Products "/>
                 </f:facet>
-                <ui:repeat value="#{operatorDetails.getAllProducts()}" var="all">
-                    <h:outputText value="#{all.productName}"/><br/>
-                </ui:repeat>
+                <h:outputText value="#{ap.productName}"/><br/>
             </rich:column>
         </rich:dataTable>
         <a4j:commandButton value="Add Products" render="products" actionListener="#{operatorDetails.addProducts()}"/>

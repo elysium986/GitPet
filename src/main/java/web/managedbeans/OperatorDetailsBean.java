@@ -12,7 +12,7 @@ import service.ProductService;
 import web.util.FacesUtil;
 
 import javax.annotation.PostConstruct;
-import javax.faces.event.ActionEvent;
+import javax.faces.event.FacesEvent;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.Set;
  * Created by Alexander Khodakovskyi on 16/10/14.
  */
 @Component("operatorDetailsBean")
-@Scope("session")
+@Scope("view")
 public class OperatorDetailsBean implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(OperatorDetailsBean.class);
 
@@ -82,11 +82,24 @@ public class OperatorDetailsBean implements Serializable {
         return productService.findAll();
     }
 
-    public void addSelected(ActionEvent event) {
-        Product product = (Product)event.getComponent().getParent().getAttributes().get("selectedObject");
-        if (isChecked()) {
+    public void addSelected(FacesEvent event) {
+        String productName = FacesUtil.getRequestParam("selectedObject");
+        Product product = productService.find(productName);
+        if (isChecked() && product != null && newProduct(product)) {
             selectedProducts.add(product);
+        } else {
+            FacesUtil.error("This product already exists for: " + operator.getOperatorName());
+            setChecked(false);
         }
+    }
+
+    private boolean newProduct(Product product) {
+        for (Product p : getProducts()) {
+            if (p.getProductCode().equals(product.getProductCode())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public OperatorService getOperatorService() {
