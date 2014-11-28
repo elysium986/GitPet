@@ -62,7 +62,7 @@ public class OperatorDetailsBean implements Serializable {
 
     public Operator addProducts() {
         if (!selectedProducts.isEmpty()) {
-            Set<Product> currentProducts = operator.getProducts();
+            Set<Product> currentProducts = getProducts();
             Set<Product> newProducts = new HashSet<Product>(selectedProducts);
             currentProducts.addAll(newProducts);
             operator.setProducts(currentProducts);

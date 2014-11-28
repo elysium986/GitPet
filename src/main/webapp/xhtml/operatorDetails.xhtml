@@ -35,6 +35,16 @@
                     <h:outputText value="#{p.productName}"/><br/>
                 </ui:repeat>
             </rich:column>
+            <rich:column>
+                <f:facet name="header">
+                    <h:outputText value="Remove "/>
+                </f:facet>
+                <a4j:commandLink styleClass="no-decor" execute="@this" render="@none" oncomplete="#{rich:component('confirmPane')}.show()">
+                    <h:graphicImage value="/resources/images/delete-icon.png" alt="delete"/>
+                    <f:param name="removedObject" value="#{p.productName}"/>
+                    <br/>
+                </a4j:commandLink>
+            </rich:column>
         </rich:dataTable>
 
         <a4j:jsFunction name="remove" action="#{operatorDetails.removeProduct()}" render="products" execute="@this"
@@ -47,8 +57,8 @@
 
         <rich:popupPanel id="confirmPane" autosized="true">
             Are you sure you want to delete the row?
-            <a4j:commandButton value="Cancel" onclick="#{rich:component('confirmPane')}.hide(); return false;"/>
             <a4j:commandButton value="Delete" onclick="remove(); return false;"/>
+            <a4j:commandButton value="Cancel" onclick="#{rich:component('confirmPane')}.hide(); return false;"/>
         </rich:popupPanel>
     </h:form>
     <h:form id="addProductForm">
