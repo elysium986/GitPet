@@ -26,22 +26,20 @@
         <br/>
         <a4j:commandButton value="Save" render="availableProducts" actionListener="#{operatorDetails.save()}"/>
 
-        <rich:dataTable id="products" value="#{operatorDetails.getProducts()}" var="product">
+        <rich:dataTable id="products" value="#{operatorDetails.getProducts()}" var="pr">
             <rich:column>
                 <f:facet name="header">
                     <h:outputText value="Current Products "/>
                 </f:facet>
-                <ui:repeat value="#{of:setToList(operatorDetails.getProducts())}" var="p">
-                    <h:outputText value="#{p.productName}"/><br/>
-                </ui:repeat>
+                <h:outputText value="#{pr.productName}"/>
             </rich:column>
             <rich:column>
                 <f:facet name="header">
                     <h:outputText value="Remove "/>
                 </f:facet>
                 <a4j:commandLink styleClass="no-decor" execute="@this" render="@none" oncomplete="#{rich:component('confirmPane')}.show()">
-                    <h:graphicImage value="/resources/images/delete-icon.png" alt="delete"/>
-                    <f:param name="removedObject" value="#{p.productName}"/>
+                    <h:graphicImage value="/resources/images/remove.png" alt="delete"/>
+                    <f:param name="removedObject" value="#{pr.productName}"/>
                     <br/>
                 </a4j:commandLink>
             </rich:column>

@@ -62,7 +62,7 @@ public class OperatorDetailsBean implements Serializable {
 
     public Operator addProducts() {
         if (!selectedProducts.isEmpty()) {
-            Set<Product> currentProducts = getProducts();
+            Set<Product> currentProducts = operator.getProducts();
             Set<Product> newProducts = new HashSet<Product>(selectedProducts);
             currentProducts.addAll(newProducts);
             operator.setProducts(currentProducts);
@@ -73,8 +73,8 @@ public class OperatorDetailsBean implements Serializable {
         return null;
     }
 
-    public Set<Product> getProducts() {
-        return operator.getProducts();
+    public List<Product> getProducts() {
+        return new ArrayList<>(operator.getProducts());
     }
 
     public List<Product> getAvailable() {
